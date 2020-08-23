@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class Father{
+        constructor(x,y){
+            this.x = x;
+            this.y = y;
+        }
+        add(){
+            console.log(this.x+ this.y);
+        }
+    }
+    class Son extends Father {
+           constructor(x,y){
+                super(x,y)//super必须在第一行，在this之前
+        //先初始化子类，然后子类调用了父类的构造方法通过xy传给父类，再完成减法操作
+        //然后初始化了父类的x,y就可以调用父类的加法操作
+                this.x = x;
+                this.y = y;
+           }
+           jianfa(){
+                 console.log(this.x-this.y);
+           }
+    }
+    var son = new Son(5,3); 
+    son.jianfa()
+    son.add()
+</script>
+</html>

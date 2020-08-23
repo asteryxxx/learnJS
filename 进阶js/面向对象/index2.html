@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>点击</button>
+</body>
+<script>
+    var that; var _that;
+  class Star{
+      constructor(name,age){
+        //  Construct里面的this指向创建的实例对象
+          that = this;
+          this.name = name;
+          this.age = age;
+          this.btn = document.querySelector("button");
+           this.btn.onclick = this.sing
+      }
+      sing(){
+          //this指向是btn按钮，因为是这个按钮调用了函数，而不是ldh
+          console.log('sing的对象'+this);
+          //当我们点击的时候，[object HTMLButtonElement] = this
+          console.log(that.name);
+          //如果想输出刘德华，可以用that，因为他是全局变量，构造的时候this赋值给了that
+      }
+      dance(){
+          //这里的this指向实例对象ldh，因为是ldh调用了这个函数
+          _that = this;//true
+          console.log(this);
+          }
+  }
+  var ldh = new Star("刘德华")
+  console.log(that ===ldh);//true
+  ldh.sing()
+
+</script>
+</html>
