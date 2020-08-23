@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //原型链中this的指向
+    function Star(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    var that;
+    Star.prototype.sing = function (){
+        console.log('w 会唱歌');
+        that = this
+    }   
+    var lx = new Star ('lx',18) 
+    lx.sing();
+    console.log(that === lx);//true
+    //总结一下：不管是构造函数的this，还是原型对象的thsi都是
+    //指向的实例对象lx,只有调用的时候才能确定指向的是谁
+</script>
+</html>

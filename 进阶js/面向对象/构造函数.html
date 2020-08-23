@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Star(name,age){
+        //构造函数中的属性和方法我们称为成员
+        this.name = name;
+        this.age = age;
+    }
+    var zhh = new Star('l刘德华',18)
+    //实例成员就是构造函数内部通过this添加的成员，例如name 和 age
+    //实例成员只能通过实例化的对象来访问
+    console.log(zhh.name);
+    console.dir(zhh)
+    //静态成员 在构造函数本身上添加的成员
+    Star.sex = '男'
+    //静态成员只能通过构造函数来方法,不能通过实例对象来访问
+    console.log(Star.sex);
+    Star.prototype.sing = function(){
+        console.log('我会唱歌');
+    }//共享方法，不用开辟新的内存空间了
+        var lx = new Star('lx', 18)
+        lx.sing();
+        console.log(lx);
+        //我们对象可以使用构造函数prototype原型对象和属性方法，就是因为_对象身上有__proto__
+        //对象身上系统自己添加了一个__proto__指向构造函数的原型对象
+        //__proto__对象原型和原型对象prototype是等价的
+        console.log(lx.__proto__ === Star.prototype);//true 是一样的
+        //方法查找的规则：首先看ldh对象身上是否有sing方法，如果有就执行
+        //如果没有 sing这个方法，因为有__proto__ 的存在，就去构造函数原型对象prototype查找这个方法
+
+</script>
+</html>

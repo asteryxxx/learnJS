@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Star(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    
+    // Star.prototype.sing = function (){
+    //     console.log('w 会唱歌');
+    // }   这个会执行构造函数
+    // Star.prototype.movie = function () {
+    //         console.log('w 会拍电影');
+    //     }
+    //如果需要共享的方法很多可以，用这个方法：
+    Star.prototype = {
+        constructor: Star,
+        sing : function () {
+            console.log('w 会唱歌');
+        },//这个会指向Object ，而不是构造函数
+        movie : function () {
+            console.log('w 会拍电影');
+        }
+    }
+    var lx = new Star ('lx',18)
+    var zhh = new Star('zhh', 18)
+    console.log(Star.prototype.constructor);
+    console.log(lx.__proto__.constructor);
+
+</script>
+</html>

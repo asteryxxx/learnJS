@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //call方法
+    function fn (x){
+        console.log('w想喝咖啡'+x);
+        console.log(this);//默认是window
+    }
+    fn();//window.fn() ,this指向window
+    fn.call();//和fn()等价
+
+    var man ={
+        name :"zhh"
+    }
+    fn.call(man,520)//修改了this的指向，指向了man这个对象
+    //也可以接受参数 520传给x
+</script>
+</html>

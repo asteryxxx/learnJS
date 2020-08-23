@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Object.defineProperty() 定义新属性或修改原有的属性
+        //第三个参数，以{}形式书写，value：值 
+        //writable:是否可以重写 ，enumerable:是否可以枚举
+        var obj = {
+            id: 1,
+            pname: '小米',
+            price: 1999
+        };
+        // 1. 以前的对象添加和修改属性的方式
+        // obj.num = 1000;
+        // obj.price = 99;
+        // console.log(obj);
+        // 2. Object.defineProperty() 定义新属性或修改原有的属性
+        Object.defineProperty(obj, 'num', {
+            value: 1000,
+            enumerable: true
+        });
+        console.log(obj);
+        Object.defineProperty(obj, 'price', {
+            value: 9.9
+        });
+        console.log(obj);
+        Object.defineProperty(obj, 'id', {
+            // 如果值为false 不允许修改这个属性值 默认值也是false
+            writable: false,
+        });
+        obj.id = 2;
+        console.log(obj);//id是固定的，为true才可以修改。
+        Object.defineProperty(obj, 'address', {
+            value: '北京市茂男区xx小区',
+            // 如果只为false 不允许修改这个属性值 默认值也是false
+            writable: false,
+            // enumerable 如果值为false 则不允许遍历, 默认的值是 false
+            enumerable: false,
+            // configurable 如果为false 则不允许删除这个属性 【不允许在修改第三个参数里面的特性】 默认为false
+            configurable: false
+        });
+        console.log(obj);
+        console.log(Object.keys(obj));//拿不到address这个属性，不允许遍历
+        delete obj.address;
+        console.log(obj);
+        delete obj.pname;//没有规定不允许可以删除，所以可以删除
+        console.log(obj);
+        Object.defineProperty(obj, 'address', {
+            value: '中国山东蓝翔技校xx单元',
+            // 如果值为false 不允许修改这个属性值 默认值也是false
+            writable: true,
+            // enumerable 如果值为false 则不允许遍历, 默认的值是 false
+            enumerable: true,
+            // configurable 如果为false 则【不允许删除这个属性】▲ 默认为false
+            configurable: true
+        });
+        console.log(obj.address);
+        //上面已经设置了 configurable: false，下面再设置为true就会报错
+    </script>
+</body>
+
+</html>

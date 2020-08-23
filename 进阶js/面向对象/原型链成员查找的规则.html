@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //原型链成员查找规则讲解
+    function Star(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    Star.prototype.sing = function (){
+        console.log('w 会唱歌');
+    }   
+    //Star.prototype.sex = '男' 【2】
+    Object.prototype.sex= '女'
+    var lx = new Star ('lx',18) 
+    //lx.sex = '男'  【1】先看自己有没这个成员
+    console.log(lx.sex);
+    //总结一下：1、首先查找对象本身有没该属性
+    //2、如果没有就找她的原型__proto__指向的原型对象prototype
+    //3、如果还没有就找到原型对象的原型（Object的原型对象
+    //4、直到找到Object为null为止
+    console.log(lx.toString);
+</script>
+</html>

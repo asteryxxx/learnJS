@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //原型对象的引用，扩展内置对象的方法
+    console.log(Array.prototype);
+
+    Array.prototype.sum = function (){
+        let sum = 0;
+        //谁调用了sum 就谁是this 就是谁的长度
+        for (let i = 0; i < this.length; i++) {
+             sum += this[i];
+        }
+        return sum;
+    }
+    //  Array.prototype={
+    //      sum : function () {
+    //          let sum = 0;
+    //          //谁调用了sum 就谁是this 就是谁的长度
+    //          for (let i = 0; i < this.length; i++) {
+    //              sum += this[i];
+    //          }
+    //          return sum;
+    //      }
+    //  } 错的方法，不能用Array.prototype ={}会覆盖 只能上面那种
+    
+    var arr = [1,2,3];//他也是对象 等价于 new Array(1,2,3)
+    //这里arr调用了this 他就是this
+    console.log(arr.sum(arr));
+</script>
+</html>

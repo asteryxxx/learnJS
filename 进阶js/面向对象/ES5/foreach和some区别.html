@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var arr = ['red','green','blue']
+    //1:foreach遍历
+    arr.forEach((value)=>{
+        if(value == "green"){
+            console.log('zhaodaole');
+            return true;
+        }
+        console.log('1111');//会打印两次，说明没有终止循环foreach，一直遍历完
+    })//同理filter 中return true也不会终止遍历
+    //2:some
+    arr.some((value) => {
+            if (value == "green") {
+                console.log('zhaodaole');
+                return true;//返回true，终止遍历
+            }
+            console.log('222');//会打印一次，后面不再遍历了
+        })
+
+</script>
+</html>

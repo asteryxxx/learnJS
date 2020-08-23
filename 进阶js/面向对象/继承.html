@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //借用构造函数继承父类型属性
+    //1:父构造函数
+    function Father(name ,age){
+        //this指向父构造函数的对象实例
+        console.log(this);
+        this.name = name;
+        this.age = age
+    }
+    //2:子构造函数
+    function Son(name, age,score) {
+        //this指向子构造函数的对象实例，那怎么把父构造的两个属性拿过来使用
+        Father.call(this,name,age)
+        //父构造函数的name身上的，如果想使用name属性，一定要把this改成自己
+        this.score = score;
+      }
+      Father.prototype.makemoney = function(){
+          console.log(100000);
+      }//因为这个方法写在原型对象上，没有在构造方法里，所以儿子是没有
+      //我们刚刚的操作是调用了构造函数，没有调用到原型对象
+
+      //Son.prototype = Father.prototype;
+      Son.prototype = new Father();
+      //如果利用对象的形式修改了原型对象，别忘了利用constructor指回原来的原型对象
+      Son.prototype.constructor = Son;
+      //相当于地址给了他，指向的地址一样，一修改肯定一起变的
+      //这是子构造函数专门的方法
+      Son.prototype.exam = function(){
+          console.log('考试');
+      }
+
+         var cd = new Son("ck", 18,100)
+         console.log(cd);
+         //Son {name: "ck", age: 18, score: 100}
+         var abab = new Father("abab", 18, 100)
+          console.log(abab);
+          console.log(Son.prototype.constructor);
+
+</script>
+</html>
