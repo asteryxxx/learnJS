@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //思考题1：
+    var name ='我是window的name'
+    var obj = {
+        name :'我是obj的name',
+        getName:function(){
+            return function(){
+                return this.name
+            }
+        }
+    }
+    console.log(obj.getName()());//我是window的name
+    //var ff = obj.getName();
+    //等价于 var ff = function(){ return this.name}
+    //ff() 等价于执行了ff，然后return this.name
+    //this 在匿名函数里面，所以指向的是window的
+    //function (){this.name}();相当于立即执行函数，所以是window
+
+
+    var name = '我是window的name'
+    var obj = {
+        name: '我是obj的name',
+        getName: function () {
+            var that = this;
+            return function () {
+                return that.name
+            }
+        }
+    }
+    console.log(obj.getName()());//打印obj的name
+    //首先是obj调用的getName()函数，执行的时候把this赋值给that
+    //所以that = obj ，然后最后返回的that.name 。产生了闭包
+</script>
+</html>

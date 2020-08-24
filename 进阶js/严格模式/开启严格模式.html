@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //为整个script开启严格模式
+    "use strict";
+    //下面的js代码都会按照严格模式执行
+</script>
+<script>
+    //为脚本开启严格模式
+    (()=>{
+        "use strict";
+        var num = 10;
+    })();
+</script>
+
+<script>
+    //为某个函数开启严格模式
+    function fn(){
+       "use strict";  
+    }
+
+    //在严格模式下，如果一个变量没有声明就赋值，默认是全局变量，严格模式
+    //禁止这种用法，变量必须用var声明先，在使用
+    //不能随意删除已经声明好的变量
+    //严格模式下的全局作用域中函数中的this是undefined，不再指向window
+    //函数的参数不能重名
+    //
+</script>
+</html>

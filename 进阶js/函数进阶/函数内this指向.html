@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //函数内this的指向
+    //是调用函数的时候确定的，调用方式的不同决定了this的指向
+
+     //1:普通函数 【this指向window
+        function fn() {console.log('普通函数指向:'+this); };
+        window.fn(); //普通函数指向:[object Window]
+
+        //2：构造函数,【this指向ldh这个实例对象，原型对象也是指向ldh实例对象
+        function Star() { console.dir('构造函数指向:' + this);}
+        Star.prototype.sing = function(){
+        }
+        var ldh = new Star();
+
+        //3:对象的方法,【this指向的是对象o
+        var o = {
+            sayHi: function () { console.log('对象的方法指向:' + this); }
+        }//对象的方法指向:[object Object]
+        o.sayHi();
+
+        //4:绑定事件函数,【this指向的是btn，因为是他调用的
+        // btn.onclick = function(){}
+
+        //5:定时器函数，【this指向的是window
+        //setInterval(function(){},1000)
+
+        //6:立即执行函数，【this指向的是window
+        (function () {
+            console.log('立即执行函数'+this);
+        })();//立即执行函数[object Window]
+</script>
+</html>

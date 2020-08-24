@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var obj = {
+        id :1,
+        name :'zhh',
+        msg:{//会开辟新的，因为是对象级别的
+            age:999
+        }
+    }
+    var o ={};
+    for(var k in obj){
+        //k是属性名 obj[k]是值
+        o[k] = obj[k];
+    }
+   // console.log(o);
+    //这种属于浅拷贝，只会把msg的地址拷贝给了o,
+    //也就是说obj的msg和O的msg指向同一个，如果修改会影响的
+    console.log('---------');
+    Object.assign(o,obj)//这个也是浅拷贝，更简单
+    console.log(o);
+</script>
+</html>
