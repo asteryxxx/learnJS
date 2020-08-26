@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         var name ="我是全局的"
+         function fun (){
+             console.log(name);
+         }
+
+         var obj = {
+             name :"zhh",
+             sayName:fun
+         };
+         var obj2 = {
+             name :"lx",
+             sayName:fun
+         };
+         obj.sayName();//我是全局的  //console.log(name);
+        //我们希望输出obj的name,所以 //console.log(this.name);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    /*
+    js的变量都是保存到栈中的，基本数据类型的值直接
+    在栈内存中存储的，值与值之间是独立存在的，
+    修改一个变量是不会影响到另一个变量的。
+
+    对象是保存到堆内存中的，只要New OBject,就在堆内存开辟
+    出新的内存空间，这个空间专门保存这个对象的。有个内存地址
+    假设内存地址是0x123，这个obj在栈内存存的就是0x123地址、
+    如果两个变量引用的都是同一个对象引用，当一个变量修改时，
+    另一个也会受到影响。
+
+    */
+    var a =123;
+    var b = a;
+    a++;
+    console.log('a:'+a);//124
+    console.log('b:'+b);//123
+
+    var obj =new Object()
+    obj.age=16
+    var obj2 =obj;
+    obj2.age = 12
+    console.log('obj: '+obj.age);//12
+    console.log('obj2:'+obj2.age);//12
+</script>
+
+</body>
+
+</html>

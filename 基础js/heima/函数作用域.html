@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a =10;
+        function fn (){
+            var b =45
+            var a =33
+            //如果函数作用域有重名的变量，采取就近原则，打印33，
+            //如果没有就去上一级找，打印10。如果全局也没用，
+            console.log('a:'+a);
+        }
+        fn()//10
+        //在函数作用域中，可以访问到全局作用域的变量。
+      //  console.log('b:'+b);//全局访问不到局部
+
+        var c= 300;
+        function fun5(){
+            console.log('c:'+c);//300
+            c=99;
+            //不使用var声明的都是全局的
+        }
+        fun5();
+          console.log('c:' + c);//99
+
+          var e =23;
+          function fun6(e){
+              //定义形参就相当于在函数作用域中声明了变量
+              //相当于var e；所以打印undefined
+              console.log('e:'+e);
+          }
+          fun6();
+
+    </script>
+</body>
+</html>

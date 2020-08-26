@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        全局作用域：直接编写在script标签的js代码。
+        全局作用域在页面打开时创建，页面关闭时销毁
+        在全局作用域有一个全局对象window，代表的是一个浏览器的窗口
+        */
+        console.log(window.a); 
+        //在全局作用域创建的变量都会作为window对象的属性来保存的
+        var a = 55//var声明的变量会提前，打印undefined
+        // 等价于 var a;  console.log(window.a); a=123
+
+        fun();//可以运行
+        function fun(){
+            console.log('我是一个fun行数');
+        }
+        b();//会报错，声明提前了
+        var b = function fun() {
+                console.log('我是一个fun行数');
+            }
+    </script>
+</body>
+</html>

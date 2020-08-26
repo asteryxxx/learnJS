@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //创建对象
+    //1、使用new关键字调用的函数，是构造函数constructor
+    var obj = new Object();
+    console.log(typeof obj);//object类型
+
+    //给对象添加属性，两种方式：
+    obj.name = 'pyy'
+    obj['age'] = 19
+    console.log(obj);//{name: "pyy", age: 19}
+    var n = 'age'
+    console.log(obj[n]);//变量更加灵活
+
+    var obj2 = new Object();
+    obj2.name = 'lx';
+    obj.duixiang = obj2
+    //对象的属性值也可以是个函数
+    obj2.sayName = function(){
+        console.log(obj2.name);
+    }
+    console.log(obj);
+    //属性值可以是任意的类型，也可以是对象。这里就不演示了。
+
+    console.log("name" in obj2);
+    //检查对象是否含有属性，用in
+
+    //删除对象的属性
+   // delete obj.name
+
+    //2、使用对象字面量创建,key值可以加引号，也可以不加引号
+    var oo ={'age':999,
+    gender:'男',
+    "test":{name:'儿子'},
+    sayName :function(){
+        console.log('我是sayname');
+      }
+    }
+     oo.name="孙悟空";  
+     //枚举对象里的属性：使用for...in语句
+    for(var prop in obj){
+        console.log("key:"+prop);
+      //  console.log(oo.prop);// 错误遍历方式
+        console.log("value:"+obj[prop]);//正确遍历方式  
+      }
+
+    var anObj = { 100: 'a', 2: 'b', 7: 'c' };
+    console.log(Object.keys(anObj));
+  
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /*let声明的变量只在所处于的块级有效
+    在一个大括号中，使用let声明有块级
+    使用var声明的不具备块级作用域*/
+
+    if(true){
+        let a = 10;
+        console.log(a);//打印10
+        if(true){
+            let c = 30
+        }
+        //console.log(c);//c is not defined
+    }
+    //console.log(a);
+  //  Uncaught ReferenceError: a is not defined
+
+  /*----防止循环变量变成全局变量---*/
+  for(var i=0;i<2;i++){
+      //i是跟for循环进行绑定，出了for就没有作用域了
+  }
+  console.log(i);//2
+  //如果改成let，就报错 
+
+    /*----使用let声明的变量没有变量提升---*/
+  //console.log(a);
+  let a =100 ;//只能先声明
+
+    /*----使用let关键字的变量具有暂时性死区特性---*/
+  var numn = 10;
+  if(true){
+      console.log(num);//他不会向上一级作用域中找到这个num
+      let num = 20;
+      // Cannot access 'num' before initialization
+  }
+ // Uncaught ReferenceError: Cannot access 'num' before initialization
+
+</script>
+</html>

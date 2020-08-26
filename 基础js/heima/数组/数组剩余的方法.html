@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //---------concat拼接--------
+        var arr = ['孙悟空','猪八戒','沙和尚'];
+        var arr2 = ['孙悟空2','猪八戒3'];
+        var arr3 = ['二郎神','太上老君']
+        //concat可以连接两个/多个数组，并将新的数组返回，不会对原数组产生影响
+        var result = arr.concat(arr2); 
+        console.log(result);
+        //(5) ["孙悟空", "猪八戒", "沙和尚", "孙悟空2", "猪八戒3"]
+
+        var r2 = arr.concat(arr2,arr3,'科比','詹姆斯')
+        //也可以在后面传需要拼的元素
+        console.log(r2);
+        //-----------join数组转成字符串，参数是拼接符号---------
+        var r3 = r2.join("，");//用逗号拼接符号
+        console.log(r3);//该方法不会对原数组产生影响
+        //孙悟空, 猪八戒, 沙和尚, 孙悟空2, 猪八戒3, 二郎神, 太上老君, 科比, 詹姆斯
+        console.log(typeof r3);//string类型
+
+        //------sort------
+        /*sort可以添加个回调函数，来制定排序规则。
+        回调函数中需要定义两个形参，浏览器将会分别使用数组中的元素
+        作为实参去调用回调函数。浏览器会根据函数的返回值来决定
+        元素的顺序，如果返回一个大于0的，则元素会交换位置。
+        */
+        Intarr = [5,4,19]
+        Intarr.sort((a,b)=>{
+            return a-b;//4 5 19升序/ chrome浏览器
+        })//b-a降序
+        console.log(Intarr);
+    </script>
+</body>
+</html>

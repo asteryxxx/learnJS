@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <script>
+            window.onload = function(){
+              var all = document.getElementById("checkAll")
+              var submit = document.getElementById("submit")
+               var items = document.getElementsByName("items");
+               var quanxuan = document.getElementById("quanxuan")
+              all.onclick = function(){
+                 for (const item of items) {
+                    item.checked = ! item.checked
+                }
+              }
+              submit.onclick = function(){
+                  for (const item of items) {
+                      if(item.checked){
+                          alert(item.value)
+                      }
+                }
+              }
+              quanxuan.onclick = function(){
+                  for (const item of items) {
+                      item.checked=this.checked//这里用this比较好
+                }
+              }
+            }
+        </script>
+</head>
+<body>
+    全选：<input type="button" id="checkAll" value="全选" /><br />
+       不选<input type="button" id="submit" value="提交" /><br />
+     反选<input type="button" id="othercheck" value="反选" /><br />
+       <div id="div">
+           <input type="checkbox" id="quanxuan" />全选/全不选
+         <input type="checkbox" name="items" value='篮球'/>篮球
+        <input type="checkbox" name="items" value='足球'/>足球
+         <input type="checkbox" name="items" value='羽毛球'/>羽毛球
+        <input type="checkbox" name="items" value='排球'/>排球
+        <input type="checkbox" name="items" value='网球'/>网球
+         <input type="checkbox" name="items" value='乒乓球'/>乒乓球
+        </div>
+
+    </body>
+
+</html>
