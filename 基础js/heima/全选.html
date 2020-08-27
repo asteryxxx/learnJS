@@ -10,10 +10,18 @@
               var submit = document.getElementById("submit")
                var items = document.getElementsByName("items");
                var quanxuan = document.getElementById("quanxuan")
+                 var checkNOAll = document.getElementById("checkNOAll")
               all.onclick = function(){
                  for (const item of items) {
-                    item.checked = ! item.checked
+                    item.checked = true
                 }
+                  quanxuan.checked = true;
+              }
+               checkNOAll.onclick = function(){
+                 for (const item of items) {
+                    item.checked = false
+                }
+                  quanxuan.checked = false;
               }
               submit.onclick = function(){
                   for (const item of items) {
@@ -27,13 +35,26 @@
                       item.checked=this.checked//这里用this比较好
                 }
               }
+
+               for (const item of items) {
+                 item.onclick = function (){
+                   quanxuan.checked = true;
+                    for (const ii of items) {
+                      if(!ii.checked){
+                      quanxuan.checked = false;
+                      break;
+                  }
+                }
+                    
+                 }
+               }
             }
         </script>
 </head>
 <body>
     全选：<input type="button" id="checkAll" value="全选" /><br />
        不选<input type="button" id="submit" value="提交" /><br />
-     反选<input type="button" id="othercheck" value="反选" /><br />
+     全不选<input type="button" id="checkNOAll" value="全不选" /><br />
        <div id="div">
            <input type="checkbox" id="quanxuan" />全选/全不选
          <input type="checkbox" name="items" value='篮球'/>篮球

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1{
+           width: 200px;
+           height: 200px;
+           background-color: red; 
+        }
+        .s1{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1" id="box1">
+        我是Box1
+        <span class="s1" id="s1">我是span内容</span>
+    </div>
+</body>
+    <script>
+        var s1 = document.getElementById('s1')
+         var box1 = document.getElementById('box1')
+        s1.onclick = function (){
+            event.cancelBubble=true // event.stopPropagation();//他后面的都会阻止
+            //两种方法都是可行
+            console.log('我是span的响应函数');
+        }
+         box1.onclick = function (event){
+             //return false; //阻止全部事件
+            console.log('我是box1的响应函数');
+        }
+        document.body.onclick = function(event){
+             console.log('body的响应函数');
+        }
+       /* 当我们点击span的时候，会冒泡到上面,打印如下：
+            我是span的响应函数
+            事件的冒泡.html: 31 我是box1的响应函数
+            事件的冒泡.html: 34 body的响应函数 */
+    </script>
+</html>

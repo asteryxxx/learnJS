@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .areaDiv{
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            border: 1px solid black;
+            position: absolute;
+        }
+    </style>
+</head>
+<body style="height: 1000px;">
+    <div class="areaDiv" id="areaDiv"></div>
+</body>
+<script>
+     var areaDiv = document.getElementById("areaDiv")
+     //绑定给document文档最好
+     //【document对象代表整个html文档,可用来访问页面中的所有元素；
+    // 【body代表document的主体子对象，除浏览器头部，页面中能够看到的内容都属于body中的内容
+      document.onmousemove = function(event){ 
+          event = event || window.event
+          //如果event不存在，就是undefined，返回false就取后面
+          var st = document.body.scrollTop || document.documentElement.scrollTop
+          var left = event.clientX  
+          //鼠标在当前可见窗口的坐标
+          var top = event.clientY     
+                areaDiv.style.left = left  +'px'
+                //pageX：是鼠标相对于页面的坐标。但是ie8不兼容
+                areaDiv.style.top = top + st +'px'
+      }
+</script>
+</html>

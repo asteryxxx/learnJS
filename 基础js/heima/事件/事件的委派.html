@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+<body>
+    <button id='btn'>点击我</button>
+    <ul class="u1" id='u1'>
+        <li><a href="javascript:;" class="link">链接1</a></li>
+        <li><a href="javascript:;" class="link">链接2</a></li>
+        <li><a href="javascript:;" class="link">链接3</a></li>
+    </ul>
+</body>
+<script>
+    /*--------- 事件的委派【利用了冒泡：
+    将事件统一绑定给元素的共同祖先元素，这样后代元素触发时，就会
+    冒泡到祖先元素上，从而通过祖先元素的事件响应函数来处理事件。
+    减少了事件绑定的次数，提高了性能
+    */
+        window.onload = function (){
+            var ul = document.getElementsByClassName('u1')[0];
+            alert(ul.id)
+            var btn = document.getElementById('btn')
+            var alls = document.getElementsByTagName("a")
+            for (let i = 0; i < alls.length; i++) {
+                 alls[i].onclick = function(){
+                   //只能为已有的超链接绑定，新添加的需要重新绑定才行。麻烦
+                 }
+            }
+            btn.onclick = function(){
+                    var li =document.createElement('li')
+                    li.innerHTML = '<a href="javascript:;" class="link">新建的链接1</a>'
+                    ul.appendChild(li)
+            }
+            //this不是事件触发对象，是给谁绑定谁就是this，这里是ul，所以不能用】
+            ul.onclick = function(event){
+        //如果触发的对象是我们的元素，才执行，这里是指触发的希望只能是a标签
+                //target :返回触发事件的元素目标
+                if(event.target.className == "link"){
+                    //判断触发的是否有这样classname样式
+                    console.log("我是ul的的的")
+                }
+            }//点哪个li都会触发,因为点击a就会冒泡到Li然后冒到ul。
+        }
+        //我们希望只绑定一次，就可以引用到多个元素，后添加的也有
+        //可以尝试将其绑定给元素的共同祖先元素。
+
+</script>
+</html>

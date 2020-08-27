@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .outer{
+            width: 600px;
+            height: 600px;
+            margin: 50px auto;
+            background-color: gray;
+            text-align: center;
+        }
+         .inner{
+            width: 600px;
+            height: 600px;
+         }
+    </style>
+</head>
+<body>
+    <div class="outer"><p id="info"></p>
+        <img src='1.jpg' alt="头像1">
+        <div class="inner">
+           <button id="pre">上一个</button>
+        <button id="next">下一个</button>
+        
+     </div>
+        
+    </div>
+    <script>
+        
+        var next = document.getElementById("next");
+        var pre = document.getElementById("pre");
+        var img = document.getElementsByTagName("img")[0];
+       // 当前显示图片的索引
+        var index = 0
+        var info = document.getElementById("info");
+        var imgarr = ["1.jpg","2.jpg","3.jpg","4.jpg"] 
+        info.innerHTML='一共'+imgarr.length+'张图片，当前第'+(index+1)+'张';
+        //全部的图片路径
+        pre.onclick = function(){
+            index--;
+            console.log(index);
+            if(index<0){
+                index=imgarr.length-1
+            }
+            img.src = imgarr[index]
+            info.innerHTML='一共'+imgarr.length+'张图片，当前第'+(index+1)+'张';
+        }
+        next.onclick = function(){
+            index++
+            console.log(index);
+             if(index>imgarr.length-1){
+                 index = 0
+            }
+            img.src = imgarr[index]
+            info.innerHTML='一共'+imgarr.length+'张图片，当前第'+(index+1)+'张';
+        
+        }
+    </script>
+</body>
+</html>

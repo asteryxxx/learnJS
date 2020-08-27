@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn">点我一下</button>
+    <button id="btn2">读取元素内容</button>
+    <div class="box" id="box"></div>
+</body>
+<script>
+    //【currentStyle和getComputedStyle读取到的都是只读，不可以修改，
+    //要修改必须通过.style属性来修改。】
+        var btn = document.getElementById("btn")
+        var btn2 = document.getElementById("btn2")
+         var box = document.getElementById("box")
+           btn.onclick= function(){
+               //【元素.style.样式名 = 样式值
+               box.style.width = "300px"
+               box.style.backgroundColor = 'green'
+               //如果样式名有减号，他认为你做减法了。需要将样式名修改成驼峰
+                //改的是内联样式。有较高的优先级
+            }
+             btn2.onclick= function(){
+                 //读也读的是内联样式，无法读取样式表的，
+                    //alert(box.style.width)
+
+                //获取元素当前显示的样式,这个方法，只兼容于 IE 浏览器
+                //alert(box.currentStyle.height)
+                
+     //【在其他浏览器中可以使用 getComputedStyle() 这个方法来获取元素当前的样式
+                /* 读取元素样式，返回的值带有单位，例如：px
+                需要两个参数
+                    1. 要获取样式的元素
+                    2 . 可以传递一个伪元素，一般都传 null
+                */
+                var oo = getComputedStyle(box,null);
+                console.log(oo.height);//200px
+                //如果获取的样式没有设置，会获取真实的值，而不是默认值
+        //比如两个地方都没有设置width，他不会获取auto，而是一个具体长度，【根据屏幕宽度获取的
+             }
+
+             //定义一个函数同时兼容ie
+             function getstyle(obj,name){
+                 //name是变量不要用.name
+               //正常浏览器 getComputedStyle 是一个对象，可以直接打印的
+               if(window.getComputedStyle){
+                    return getComputedStyle(obj,null)[name];
+               }else{
+                  return obj.currentStyle[name]
+           //到Ie8的时候去找getComputedStyle，函数和全局都没有，报错，不会执行后面的代码
+//没有加window是变量，去全局里面找。加了window就是对象的属性，找不到返回undefined
+               }
+             }
+
+             /*这里对上面解释下：用没有定义的变量——报错、用没有定义的属性——undefined
+             window.onload = function() {
+                     alert(window.a);
+                      // alert会执行,弹出'undefined'
+              };
+
+            window.onload = function() {
+                     alert(a);
+                        // 报错： Uncaught ReferenceError: a is not defined
+                      // alert不会执行
+              };
+   建议：所有的变量都是window对象的一个属性,所以在判断某个变量是否有值时,可以在变量前加'window.',防止程序在执行过程中报错。
+
+             */
+</script>
+
+</html>
