@@ -10,9 +10,40 @@
 </head>
 
 <body>
-    
+    <button id="btn">开始</button>
+     <button id="btnstop">停止</button>
+    <img src="1.jpg" id="img1">
 </body>
 <script>
-    
+    //使得图片自动切换
+    var timer ;
+    var img1 = document.getElementById('img1')
+    var btn = document.getElementById('btn');
+        var btnstop = document.getElementById('btnstop');
+        //目前每点击一次就会开启一个定时器，如果点击多次，相当于多个定时器都在切换图片
+        //所以图片展示特别快。我们只希望他开启一个，在开启之前，把上一个定时器关闭了。
+
+        btnstop.onclick = function (){
+            //在开启之前，把当前元素上的其他定时器必须得关闭了。不同元素的不需要关闭
+            clearInterval(timer)
+         //clearInterval可以接受任何参数，如果参数是有效的定时器的标识，则停止对应的
+         //如果参数不是一个标识，则什么也不会做。即使是undefined也不会报错   
+        }
+    btn.onclick = function(){
+         clearInterval(timer)
+         timer = setInterval(()=>{
+         index++;
+        //判断索引是否超过最大索引，则设置为index = 0
+        // if(index>=imgArr.length){
+        //     index = 0
+        // }
+        index = index % imgArr.length
+        //修改img1的src属性
+        img1.src = imgArr[index];
+    },500)
+    }
+    var imgArr = ["1.jpg", "2.jpg", "3.jpg", "4.jpg"]
+    var index = 0;
+   
 </script>
 </html>

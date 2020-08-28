@@ -5,14 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box1{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+        }
 
     </style>
 </head>
 
 <body>
-    
+    <button id='btn'>点击后向右移动</button>
+    <div id='box1'></div>
+    <div style="width: 100px; height: 100px; border: 1px solid;position: absolute;left: 800px;"></div>
 </body>
 <script>
-    
+    var btn = document.getElementById('btn')
+        var box1 = document.getElementById('box1')
+        var timer;
+        btn.onclick = function (){
+            clearInterval(timer)
+            var timer = setInterval(()=>{
+              //获取box1的原来的left值,因为上面是定位了，可以直接获取left
+                var oldValue = parseInt(getStyle(box1,'left'))
+                //parseInt("10px") 会得到10，px不会得到，他不是合法数字 】这是重点，parseInt只会转换合法数字
+                //在旧的基础上增加
+                var newValue = oldValue + 19;
+
+                if(newValue>800){
+                    newValue=800;
+                } //这里设为800，后面判断的时候肯定就能判断的到了
+                //将新的值设置给Box1.
+                box1.style.left = newValue +'px'
+                //当元素移动到800px时，停止
+                if(newValue === 800){
+                    clearInterval(timer);
+                }
+               },10)
+        }
+
+        function getStyle(obj, name) {
+                if (window.getComputedStyle) {
+                    //正常浏览器的方式，具有getComputedStyle()方法
+                    return getComputedStyle(obj, null)[name];
+                } else {
+                    //IE8的方式，没有getComputedStyle()方法
+                    return obj.currentStyle[name];
+                }
+            }
 </script>
 </html>

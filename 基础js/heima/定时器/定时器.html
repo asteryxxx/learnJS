@@ -13,12 +13,20 @@
     <h1 id="count"></h1>
 </body>
 <script>
-    //setIntervaldin
+    //setInterval定时调用
+    /*参数：1、回调函数 2、调用间隔的时间  3、
+    返回值：NUMBER类型的数据【标识】。一个页面可能打开多个定时器，根据返回值区分定时器
+
+    */
     var count = document.getElementById("count");
     var num =1;
     var timer = setInterval(function(){
         count.innerHTML = num++;
+        if(num==15){
+            clearInterval(timer)//关闭定时器，需要一个标识
+        }
     },1000);
-    console.log(timer);
+    console.log(timer);//打印1
+   
 </script>
 </html>
