@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box01 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+         #box02 {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            position: absolute;
+            left:200px
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id='box01'>
+    </div>
+<div id='box02'>
+    </div>
+</body>
+<script>//【当我们点击了div，然后才开始拖拽的
+    /*
+    拖拽过程：1、当鼠标按下时，然后鼠标移动时，onmouseedown【鼠标被按下
+    被拖拽元素跟随鼠标移动【onmousemove】。鼠标松开时【onmouseup】被拖拽元素就固定不动
+    */
+    var box1 = document.getElementById("box01")
+    box1.onmousedown = function(e){
+        //div的偏移量：鼠标.clientX -元素.offsetLeft
+        //点的那一刻就要求出来，因为后面移动距离是不变的。
+            e = e ||window.e
+        var o1 = e.clientX - box1.offsetLeft
+        var o2 = e.clientY - box1.offsetTop
+
+
+        //为document绑定移动事件
+        document.onmousemove = function(e){
+            e = e ||window.e
+            //获取鼠标的坐标
+            var left = e.clientX - o1;
+            var top = e.clientY - o2;
+            box1.style.left = left +'px'
+             box1.style.top = top +'px'
+        }
+        //鼠标松开事件,取消事件
+        //box1.onmouseup = function () { //会有点问题
+        document.onmouseup = function(){
+            document.onmousemove = null
+            //鼠标松开也要取消,【不然你随便点击页面松开都会触发，不太友好
+            document.onmouseup = null
+            console.log('鼠标松开了');
+        }
+        //当你把红色的盒子移动到黄色的盒子上面，
+        //在黄色的盒子松开并没有反应，还会一直动。因为鼠标在黄色的上面，
+ //现在松开触发的是box2的，然后box1还会跟着移动。所以最好给document绑定松开
+    }
+</script>
+
+</html>
