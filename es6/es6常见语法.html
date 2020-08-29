@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //---------变量的解构赋值-----------
+        //1:数组的解构
+        const F4 = ['张三','王五','laoliu','彭于晏']
+        let [zhang,wang,liu,wo] =F4
+        console.log(zhang)//张三
+        console.log(wo)//彭于晏
+        //2:对象的解构
+        const zhao = {
+            name :'zhh',
+            age:18,
+            xiaoping:function(){
+                console.log('我可以小品');
+            }
+        }
+        let{name,age,xiaoping} = zhao
+        console.log('name:'+name);
+        console.log('name:'+age);
+        xiaoping();
+            console.log('=========================');
+
+        //------新的声明字符串的方式----
+        //1:内容可以出现换行字符
+        let str = `是是是字符串`;
+        console.log(str, typeof str);//string
+        //2:变量拼接，固定语法
+        let lovest = '魏喜萌';
+        let out = `${lovest}xxx是我心中的男人`;
+        console.log(out);//魏喜萌xxx是我心中的男人
+            console.log('=========================');
+
+        //-----允许在大括号里面，直接写入变量和函数，作为对象属性和方法------
+        let name1 ='彭于晏';
+        let change = function(){
+            console.log('我们可以改变你');
+        }
+        const school ={
+            name1,change
+            //等同于name:name这样的写法
+            ,improve(){
+                console.log('我可以提高性能');
+            }
+        }
+        school.change()
+        school.improve()
+        console.log('=========================');
+        //-------------箭头函数-------------
+        let fn = (a,b) => {
+            return a+b
+        }
+        //1:this是静态的，始终指向函数声明时所在作用域下的this值,不会变的
+        function getName3(){
+            console.log(this.xingming);
+        }
+        let getName4 = () =>{
+             console.log(this.xingming);
+        } 
+        xingming = '吴彦祖';
+        const school22= {
+            xingming:'pyy'
+        }
+        getName3.apply(school22);//pyy
+        getName4.apply(school22);//吴彦祖,发现是没有改变指向的
+        //2:不能作为构造函数实例化对象
+        let Person = (name,age)=>{
+            this.name = name;
+            this.age =age;
+        }
+        //let me = new Person('xiaoli',18);
+        // console.log(me);//Person is not a constructor
+
+        //3:不能使用arguments变量
+        let fn33 = () =>{
+            console.log('arg:'+arguments);
+        }// arguments is not defined
+       // fn33(1,2,3)
+
+       //4:箭头函数的简写
+       //1)省略小括号，当形参有且只有一个参数
+       //2)当代码块只有一条语句时，可以省略花括号
+       let add = n => n + n
+       console.log('加法：'+ add(3,4));
+
+        //案例1：点击div变色
+        // let ad =document.getElementById('a');
+        // ad.addEventListener('click',function(){
+        //     setTimeout(()=>{//不用箭头函数的话，this指向window
+        //         this.style.background = 'red'
+        //     },2000)
+        // })
+
+        //案例2：从数组中返回偶数
+        const arr2 = [6,7,8,9,10]
+        const result = arr2.filter(item => item%2 === 0)
+        console.log('res:'+result);
+        //总结：箭头函数适用于与this无关的回调，定时器，数组的方法回调
+        //不适合对象的方法
+   // ad.addEventListener('click',function(){他这个this指向事件源的，如果用箭头不行
+
+        console.log('=========================');
+        //-------------函数参数的默认初始值-------------
+        //1:形参初始值
+        function jianfa (a,b=4){//b的默认值是4，不传的话，一般位置要靠后
+            return a-b
+        }
+        let rest1 = jianfa (10);
+        console.log(rest1);
+        //2:与解构赋值结合
+        function connect ({host,username,password='123456'}){
+        //直接形参直接解构，就不用定义：let host = options.host...这样
+        //如果密码没有传，走默认值
+            console.log('host:'+host);
+            console.log('username:'+username);
+             console.log('password:' + password);
+        }
+        connect ({
+            host:'localhost',
+            username:'root'
+        })
+
+        console.log('=========================');
+        //-------------rest参数，用于获取函数的实参，代替arguments-------------
+        function date(){
+            console.log(arguments);
+        }//es5获取方式
+        date('zhh','lx','ck')
+        function date1(...args){
+            console.log(args);
+        }
+        date('zhh2','lx2','ck2')
+        //注意事件：rest参数必须放到参数最后。
+        function fn66(a,b,...args){
+            console.log(a);console.log(b);
+            console.log("////"+args);////3,4,5,6
+        }
+        fn66(1,2,3,4,5,6)
+
+         console.log('=========================');
+        //----------拓展运算符能将数组转换成逗号分隔的参数序列------
+        const tfboys = ['王源1', '王源2', '王源5','王源3']
+        function chunwan(){
+            console.log(arguments);
+        }
+        chunwan(tfboys)//0: Array(4)
+        chunwan(...tfboys)//Symbol(Symbol.iterator)，参数变成4个了
+        //等同于这样chunwan('王源1', '王源2', '王源5','王源3')↑↑↑
+        //用...加数组可以转换成参数序列，用逗号分隔↑↑↑↑
+
+</script>
+</body>
+</html>

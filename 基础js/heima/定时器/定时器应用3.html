@@ -5,14 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-
+         *{
+            margin: 0;
+            padding: 0;
+        }
+        #box1{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+        }
+        #box2{
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            left: 0;
+            top:200px
+        }
     </style>
 </head>
-
 <body>
-    
+    <button id='btn'>点击后box1向右移动</button>
+     <button id='btn2'>点击后box1向左移动</button>
+      <button id='btn3'>点击后box2向右移动</button>
+    <button id='btn4'>点击后修改高宽</button>
+
+    <div id='box1'></div>
+     <div id='box2'></div>
+    <div style=" height: 1000px; border: 1px solid;position: absolute;left: 800px;"></div>
 </body>
 <script>
-    
+    var btn = document.getElementById('btn')
+    var btn2 = document.getElementById('btn2')
+     var btn3 = document.getElementById('btn3')
+          var btn4 = document.getElementById('btn4')
+        var box1 = document.getElementById('box1')
+         var box2 = document.getElementById('box2')
+        var timer;
+        //尝试创建简单动画的函数
+        /*
+            obj:要执行动画的对象
+            attr:要执行动画的样式，比如:left，top
+            target:执行动画的目标位置
+            speed:移动的速度【只传正数
+            callback:回调
+        */
+        function move(obj,attr,target,speed,callback){
+            clearInterval(obj.timer)
+           
+              var current = parseInt(getStyle(obj,attr))
+        //获取box1的原来的left值,因为上面是定位了，可以直接获取left
+     //parseInt("10px") 会得到10，px不会得到，他不是合法数字 】这是重点，parseInt只会转换合法数字
+              if(current>target){//如果current为800，target为0，，为负值
+                  speed = -speed//此时速度为负值
+              }
+          //判断speed正负
+            //如果从0到800移动，speed必须是正的
+            //获取元素的目前位置
+             obj.timer = setInterval(()=>{
+                var oldValue = parseInt(getStyle(obj,attr))
+
+                //在旧的基础上增加
+                var newValue = oldValue + speed;
+
+                if((speed < 0 && newValue<target)|| (speed > 0 && newValue > target)){
+                    newValue = target;
+                } 
+                //向左移动时，需要判断newValue是否小于target
+                //向右移动时，需要判断newValue是否大于target
+                //如果speed是正数就向右移动
+                obj.style[attr] = newValue +'px'
+                //当元素移动到800px时，停止
+                if(newValue == target){
+                    clearInterval(obj.timer);
+                    callback && callback();//只会执行一次回调
+                    //如果有传回调函数就执行，没有就不执行
+                }
+               },10)
+        }
+    //当我们先运行慢的，然后再运行快的，会发现另一个停了，因为共用一个timer
+    //move函数里面timer是一个全局的定时器，box2先动的话点box1，那box2就会停   
+    //我们现在是不同的元素开启多个定时器，【所以不要用全局 。我们给obj.timer添加属性】
+    btn3.onclick = function () {
+        move(box2,"left", 800, 2)
+    }
+         btn2.onclick = function (){
+            move(box1,"left",0,10)
+        }
+        btn.onclick = function (){
+            move(box1,"left",800,10,()=>{
+                alert("动画执行完毕了")
+            })
+        }
+    btn4.onclick = function () {
+        move(box2,"width", 800, 3,()=>{
+             move(box2,"height",400,10,()=>{
+                alert("执行完毕了")//先变宽在变高
+            })
+        })
+    }
+        function getStyle(obj, name) {
+                if (window.getComputedStyle) {
+                    //正常浏览器的方式，具有getComputedStyle()方法
+                    return getComputedStyle(obj, null)[name];
+                } else {
+                    //IE8的方式，没有getComputedStyle()方法
+                    return obj.currentStyle[name];
+                }
+            }
 </script>
 </html>

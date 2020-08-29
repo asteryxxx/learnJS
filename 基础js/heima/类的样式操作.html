@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .b1{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+        .b2{
+            width: 200px;
+            height: 200px;
+            background-color: green;
+            border: 10px solid blue;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="box" class="b1">hhh
+    </div>
+    <button id='btn01'>惦记我</button>
+   
+</body>
+ <script>
+        var box = document.getElementById('box');
+        var btn01 = document.getElementById('btn01')
+        btn01.onclick = function(){
+            //修改Box的样式
+            //如果需要修改多个样式，不建议用.style属性来修改
+            //box.className ='b2'
+            //只需要修改一次，渲染页面也一次
+            
+            //【有时候我们不需要去掉b1，只想把b2的样式附加进去，原有的基础上增加
+           // box.className +=' b2'  //需要空格 class="b1 b2"
+           addClass(box,"b2")
+        }
+        function addClass(obj,cn){
+            if(!checkclassname(obj,cn)){//取反，没有再添加
+                obj.className += " "+cn;
+            }
+        }
+        //判断元素中是否含有指定的classname，有就返回true
+        function checkclassname(obj,cn){
+            //var reg = /\bb2\b/; 这样写死了，要用构造函数 
+            //class="b216" ,也能返回true，希望b2是独立的单词
+
+            var reg = new RegExp("\\b"+cn+"\\b") //这里双斜杠
+            return reg.test(obj.className)
+        }
+        //删除元素的样式
+        function removeClass(obj,cn){
+             var reg = new RegExp("\\b"+cn+"\\b") //这里双斜杠
+            obj.className = obj.className.replace(reg,"")
+        }
+        //如果元素中没有该类，就添加；否则删除
+        function toggleClass(obj,cn){
+            if(checkclassname(obj,cn)){
+                removeClass(obj,cn)
+            }else{
+                 addClass(obj,cn)
+            }
+        }
+    </script>
+</html>

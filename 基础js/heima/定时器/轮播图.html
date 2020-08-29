@@ -1,18 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #imgList{
+            /* width: 2084px; */
+            list-style: none;
+            /* display: flex; */
+            position: absolute;
+           
+            left: 0;
+        }
+         #imgList li{
+             margin:0 10px ;
+            float:left
+         }
+    /* 如果给li设置float: left;没起作用，因为ul没设置宽度，所以
+    是父元素的100%,父元素才501px，所以ul是501pX，别人没地方 摆了 */
+        #outer{
+             overflow: hidden;
+            position: relative;
+            width: 521px;
+            height: 501px;
+            margin: 50px auto;
+            background-color: green;
+            padding: 10px 0;
+        }
+        .navDiv{ 
+            display: flex;
+            position: absolute;
+            bottom: 20px;
+        }
+        .navDiv a{
+            background-color: red;
+            width: 15px;
+            height: 15px;
+            margin: 0 5px;
+            opacity: 0.5;
+            /* 兼容ie8透明 */
+            filter: alpha(opacity=50);
+        }
+        .navDiv a:hover{
+            cursor: pointer;
+             background-color:grey
+        }
     </style>
 </head>
 
 <body>
-    
+    <div id="outer">
+        <ul id="imgList">
+            <!-- ul用于放置图片 -->
+            <li>
+                <img src="1.jpg" alt="">
+            </li>
+            <li>
+                <img src="2.jpg" alt="">
+            </li> <li>
+                <img src="3.jpg" alt="">
+            </li> <li>
+                <img src="4.jpg" alt="">
+            </li>
+            <li>
+                <img src="1.jpg" alt="">
+            </li>
+        </ul>
+        <!-- 导航按钮 -->
+        <div class="navDiv" id="navDiv">
+            <a href="javascript:;"></a>
+              <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+            <a href="javascript:;"></a>
+        </div>
+    </div>
 </body>
-<script>
-    
+<script type="text/javascript" src="donghua.js">
 </script>
+<script>
+    //实际上就是把所有的图片摆成了一行，然后不断往左边偏移，调整ul的偏移量
+    //<ul style="width:3120px left:-520px">这样left一直在变
+    window.onload = function(){
+        //设置imglist宽度
+        var imgList= document.getElementById('imgList');
+        var imgArr = document.getElementsByTagName('img');
+        console.log('//'+  imgArr.length);
+        imgList.style.width = 521 * imgArr.length +'px';
+        //设置导航居中
+        var navDiv = document.getElementById('navDiv')
+        var outer = document.getElementById('outer')
+        //设置navdiv的left
+        navDiv.style.left = (outer.offsetWidth - navDiv.offsetWidth)/2+'px'
+        var allA = document.getElementsByTagName('a');
+        //默认显示图片的索引
+        var index = 0
+        //设置默认选中的效果
+        allA[index].style.backgroundColor ='grey'
+        
+        //自动切换图片的方法
+        function autoChange(){
+            console.log('jinlail');
+          timer = setInterval(function(){
+                index ++;
+                index = index %imgArr.length
+                // if(index>=imgArr.length){
+                //     index=0
+                // }
+                console.log('setinterval :'+index);
+                move(imgList, "left", index * (-521),100, function () {
+                    //修改导航按钮
+                    setA()
+                })
+            },2000)
+        }
+
+        //点击超链接切换到指定的图片。当我们点击的时候，要关闭自动切换的定时器
+        //不然有两个动画在执行，可能图片会过不去。点击优先！
+        for (let i = 0; i < allA.length; i++) {
+            allA[i].index = i
+             allA[i].onclick = function (){
+                 //先关闭自动切换的定时器才行，还要再次开启才行。不然就永远停止了
+                 clearInterval(timer);
+                //获取点击的超链接的索引
+                index = this.index;
+                 setA()
+                //切换图片,如果显示第二张-521px
+               // imgList.style.left = (index *(-521))+'px'
+               move(imgList,"left", index * (-521),100,function (){
+                   autoChange();//动画执行完了，重新调用才行。不然就停止了自动切换
+                  
+               })
+             }
+        }
+        var timer ;
+        //创建一个方法用来设置选中的a
+        function setA(){
+            //判断当前索引是否是最后一张图。因为我们有五张图，所以4代表到了最后一张
+            if(index >= imgArr.length-1){
+                console.log('超过了');
+                //则index设置为0
+                index = 0
+                //【此时显示的最后一张图片，而最后一张和第一张图片是一模一样的】
+                imgList.style.left = 0
+        //因为我们这里是瞬间设置样式的，没有动画，所以没那么明显。为了缓冲所以要两张一抹一样的
+    //如果不添加一个和第一张一模一样的，还是很容易看出来，障眼法       
+    }
+            //全部都变红
+             for (let i = 0; i < allA.length; i++) {
+      //这是设置了内联样式，比hover优先级更高。当我们点击的时候，hover的样式没了
+                allA[i].style.backgroundColor = ''
+                //直接设置为空串，因为默认就是红色
+             }
+             //需要选中的单独设置
+              allA[index].style.backgroundColor = 'grey'
+        }
+        autoChange();
+
+        //我们希望ul一直是往左走的，别往回走，不好的体验效果
+
+    }
+</script>
+
 </html>
