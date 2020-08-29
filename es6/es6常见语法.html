@@ -7,6 +7,102 @@
 </head>
 <body>
     <script>
+        /*1：let声明的变量只在所处于的块级有效
+         在一个大括号中，使用let声明有块级
+         使用var声明的不具备块级作用域*/
+
+            if (true) {
+                let a = 10;
+                console.log(a);//打印10
+                if (true) {
+                    let c = 30
+                }
+                //console.log(c);//c is not defined
+            }
+            //console.log(a);
+            //  Uncaught ReferenceError: a is not defined
+
+            /*2：防止循环变量变成全局变量---*/
+            for (var i = 0; i < 2; i++) {
+                //i是跟for循环进行绑定，出了for就没有作用域了
+            }
+            console.log(i);//2
+            //如果改成let，就报错 
+
+            /*3：使用let声明的变量没有变量提升---*/
+            //console.log(a);
+            let a = 100;//只能先声明
+
+            /*4：使用let关键字的变量具有暂时性死区特性---*/
+            //块级作用域内存在let命令，他所声明的变量就绑定这个区域，不再受外部的影响。
+            var num = 10;
+            if (true) {
+                num = 'aaa';
+                let num;
+                // Cannot access 'num' before initialization
+                /* 解释下：上面的代码中，存在全局变量的num,但是块级作用域内let又声明
+                了一个局部变量num，导致后者绑定了这个块级作用域，所以在声明let变量
+                  前，对num进行赋值就会报错的。
+              ▲：Es6规定，如果区块中存在let和const，这个区块就会对这些命名声明的
+              变量从一开始就形成封闭的区域，如果在声明之前使用，就会报错。
+               暂时性死区：只要一旦进去当前作用域，所使用的变量就存在了，但是
+               不可以获取到。只有等到声明变量的代码出现，才可以使用和获取变量
+                */
+            }
+    
+         // 案例1： 在for循环中使用var声明表达式变量，
+            // 因为var是全局变量，所以循环结束后值会被覆盖掉，
+            // 比如初始值i=0;i<3那么最后循环结束后i的值只能是3
+            for(var i = 0; i<5;i++){
+                setTimeout(()=>console.log(i),0) // 5 5 5 5 5
+            }
+            // 上面的代码因为setTimeout是一个异步操作，所以它是循环结束后的i的值，
+            // 我们说的var是全局变量会被覆盖掉所以最后的i值是5，一共循环了5次（0-4）
+            // ，所以打印五个5。解决方法把var改成let即可
+         console.log('=========================');
+         //案例2：
+         let arr = [];
+            for(let i =0 ;i<2;i++){
+                arr[i] = function(){
+                    console.log(i);
+                }
+            }
+            arr[0]();
+            arr[1]();
+        /* 由于使用let声明的具有块级作用域，产生了两个块级作用域。
+            两个块级作用域的变量互不影响的，循环结束后，数组中依然
+            存储了两个函数，【在函数执行时，函数还是没有自己的变量i,
+            所以向上一级作用域中进行查询，在当前代码中，函数的上一级
+            作用域：就是循环产生的块级作用域】。所以输出的是第一个块级
+            作用域的值就是0. */
+
+        // ----------const-----------
+          if (true) {
+                const a = 10;
+                if (true) {
+                    const a = 20;
+                    console.log(a);
+                }
+                console.log(a);
+            }
+            // console.log(a);   //Uncaught ReferenceError: a is not defined
+            //1:使用const声明的常量具有块级作用域
+
+            const PI = 3.14;//声明时必须赋值
+            //2:常量赋值后，值不能变化
+            if (true) {
+                const a = 10;
+            }
+            //console.log(a);//a is not defined
+
+            const ary = [100, 200]
+            ary[0] = 123
+            ary = [1, 2] //Assignment to constant variable.
+            //3:对于复杂数据类型，值可以变，但是不可以整体赋值
+            //就是说常量对应的地址不能更改
+            console.log(ary);
+            console.log('=========================');
+
         //---------变量的解构赋值-----------
         //1:数组的解构
         const F4 = ['张三','王五','laoliu','彭于晏']
@@ -153,6 +249,26 @@
         chunwan(...tfboys)//Symbol(Symbol.iterator)，参数变成4个了
         //等同于这样chunwan('王源1', '王源2', '王源5','王源3')↑↑↑
         //用...加数组可以转换成参数序列，用逗号分隔↑↑↑↑
+
+        //案例1：数组的合并
+        const kuaizi = ['王1','王2'];
+        const fenghuang = ['曾1','曾2'];
+        //console.log(kuaizi.concat(fenghuang));//做法1
+        const newArrs = [...kuaizi,...fenghuang];//做法2
+        //等价于:['王1','王2','曾1','曾2']↑↑↑
+        console.log(newArrs);
+
+        //案例2：数组的克隆
+        const sanzhihua = ['e','g','n'];
+        const sanyecao = [...sanzhihua];
+        //虽然有引用数据类型，但是他是一个浅拷贝
+        console.log(sanyecao);
+
+        //案例3：将伪数组转为真正的数组
+        // const divs = document.querySelectorAll('div');
+        // const divArr =[...divs];
+        // console.log(divArr);//转换后数组的方法他都可以使用
+
 
 </script>
 </body>

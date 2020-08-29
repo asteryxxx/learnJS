@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- symbol是类似于字符串的数据类型 -->
+    <script>
+        //创建方式,内部实现了唯一性，不可见的。一个symbol值能作为对象属性的标识符
+        let s = Symbol();
+        console.log(s,typeof s);
+//使用typeof去检查它的类型的时候，它会返回一个属于自己的类型symbol
+        let s2 = Symbol('zhh');
+        let s3 = Symbol('zhh');
+        var sym1 = Symbol();
+        // 上面的代码s,s1,s2创建了三个新的symbol类型。 注意，Symbol("zhh")
+        //   不会强制将字符串 zhh 转换成symbol类型。
+        //   它每次都会创建一个新的 symbol类型
+
+            var sym2 = Symbol('foo');
+            var sym3 = Symbol('foo');          
+// 每个Symbol实例都是唯一的。因此，当你比较两个Symbol实例的时候，将总会返回false：
+        console.log(s2 === s3);//false
+        //就是说他只是一个标志，两个张三的编号不一样的。
+   //传入一个可选的字符串参数，相当于给你创建的Symbol实例一个描述信息
+
+        let s4 = Symbol.for('pyy')
+        let s5 = Symbol.for('pyy')
+        console.log(s4,typeof s4);
+        console.log(s4 === s5);//true
+    //symbol.for创建的方式，【可以通过描述字符串得出唯一的symbol值
+
+        //2:symbol值不能与其他数据进行运算
+       // let rs = s + 100
+       // let rs = s > 100
+
+       //基本类型：undefined ,string, symbol,object,null,number,boolean
+
+
+       //向对象中添加属性方法 up down，symbol的作用表示独一无二的值
+       let game = {
+           name:'三维弹球',
+           left:function(){
+               console.log('left');
+           },
+           up:function(){
+               console.log('game ..up....');
+           }
+       }
+   // game.up = functio(){}  这样声明有一个风险，不知道里面有没up这个方法 
+       //声明一个对象的方法
+       let methods = {
+           up:Symbol(),
+           down:Symbol()
+       }
+       game[methods.up] = function(){
+           console.log('我可以改变形状');
+       }
+       game[methods.down] = function(){
+           console.log('我可以快速下降');
+       }
+       console.log(game)//打印结果如下：
+    //    { name: "三维弹球", left: ƒ, up: ƒ, Symbol(): ƒ, Symbol(): ƒ }
+    //     left: ƒ()
+    //     name: "三维弹球"
+    //     up: ƒ()
+    //     Symbol(): ƒ()
+    //     Symbol(): ƒ()
+
+       //例子2：定义属性
+        const PROP_NAME = Symbol();
+        const PROP_AGE = Symbol();
+        let obj1 = {
+           [PROP_NAME]:'一斤代码'
+        }
+        obj1[PROP_AGE] = 18
+        console.log(obj1[PROP_AGE])
+        //例子3：枚举
+        let obj = {//为对象添加symbol类型的属性
+            [Symbol('say')]:function(){
+                console.log('我可以发言');
+            },
+            [Symbol('name')]: '一斤代码',
+             age: 18,
+            title: 'Engineer'
+        }
+        Object.keys(obj)   // ['age', 'title']
+        for (let p in obj) {
+                console.log(p) // 分别会输出：'age' 和 'title'
+            }
+        console.log(Object.getOwnPropertyNames(obj))   // ['age', 'title']
+    //getOwnPropertyNames
+    //获取对象自身的可枚举和不可枚举属性，不包括属性名为Symbol值的属性 
+    
+      /*
+           【 Symbol类型的key不能通过Object.keys()或者for...in来枚举】,
+    它未被包含在对象自身的属性名集合。我们可以把一些不需要对外操作和访问的属性使用Symbol来定义。
+    */
+       console.log(JSON.stringify(obj))  // {"age":18,"title":"Engineer"}
+   // 【使用JSON.stringify()将对象转换成JSON字符串的时候，Symbol属性也会被排除】
+         
+        //有别的方法获取以Symbol方式定义的对象属性
+        //方法1： 使用Object的API
+        console.log( Object.getOwnPropertySymbols(obj))// [Symbol(name)]
+        //方法2： 使用新增的反射API
+         console.log(Reflect.ownKeys(obj)) // (3) ["age", "title", Symbol(name)]
+
+     //========symbol内置值
+    //Symbol.hasInstatnce:当其他对象使用instanceof运算符，判断是否为该对象的实例
+        class Person {
+            static [Symbol.hasInstance](params) {
+                //instanceof前面的值传给params，
+                //【由内部自己去控制类型检测
+                console.log('params:'+params);
+                console.log('我背用来检测类型了');
+                return true
+            }
+        }
+        let o ={};
+         console.log(o instanceof Person)//true
+
+     //Symbol.isConcatSpreadable,对象用Array.prototype.concat()时，是否可以展开
+     const arr = [1,2,3]
+     const arr2 = [4,5,6] 
+     arr2[Symbol.isConcatSpreadable] = false//arr值不展开，作为整体合并
+    console.log(arr.concat(arr2));
+    //正常合并[1,2,3,4,5,6] ,如果设置为false输出结果如下:
+        // (4) [1, 2, 3, Array(3)]
+        // 0: 1
+        // 1: 2
+        // 2: 3
+        // 3: (3) [4, 5, 6, Symbol(Symbol.isConcatSpreadable): false]
+        // length: 4
+        // __proto__: Array(0)
+
+        //场景2：使用Symbol来替代常量
+        const TYPE_NAN = 'MAN';
+        const TYPE_WOMEN ='WOMEN';
+
+        function handle(resource) {
+        switch(resource.type) {
+         case TYPE_NAN:
+             playMenGame(resource)
+              break
+         case TYPE_WOMEN:
+             playWomenGame(resource)
+             break
+         default:
+      throw new Error('Unknown type of resource')
+  }
+  /*通常需要用到几个常量赋唯一的值，可以不需要花时间为value想尽办法。
+  利用Symbol:保证了三个常量的值是唯一的:
+        const TYPE_NAN = Symbol();
+        const TYPE_WOMEN =Symbol();
+  */
+
+  //场景3：使用Symbol定义类的私有属性/方法
+  //a.js文件代码如下：
+    /*  const PASSWORD = Symbol()
+     class Login {
+      constructor(username, password) {
+     this.username = username
+     this[PASSWORD] = password
+      }
+
+      checkPassword(pwd) {
+       return this[PASSWORD] === pwd
+             }
+         }   
+        export default Login    */
+
+  //b.js文件代码如下：
+/*   import Login from './a'
+     const login = new Login('admin', '123456')
+
+    login.checkPassword('123456')  // true
+     login.PASSWORD  // oh!no!
+    login[PASSWORD] // oh!no!
+     login["PASSWORD"] // oh!no!   */
+
+     /*解释下：
+         Symbol常量PASSWORD被定义在a.js所在的模块中，外面的模块获取不到这个Symbol
+    它来定义的类属性是没有办法被模块外访问到的，达到了一个私有化的效果 。。。
+    但是有个问题：使用 Symbol 只能声明假的私有属性，就如上所说通过 
+    Object.getOwnPropertySymbols(login)，可以获得 login 所有的 Symbol 属性。
+    要声明真正的私有属性，可以使用 WeakMap 类。用 WeakMap 类来存储这个变量，以 this 为健，
+    让这个变量只能在函数类使用，如此就成为了真正的私有属性，但扩展类无法继承私有属性。
+     */
+
+}
+    </script>
+</body>
+</html>
