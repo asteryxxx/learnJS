@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //对象继承ES5方式
+        function Phone (brand, price){
+            this.brand = brand
+            this.price = price
+        }
+        Phone.prototype.call = function(){
+            console.log('call...');
+        }
+
+        //智能手机
+        function SmartPhone(brand ,price,color,size){
+            Phone.call(this,brand,price)
+            this.color = color ;//子类独有的属性初始化
+            this.size = size;
+        }
+        //设置子类构造函数的原型
+        SmartPhone.prototype = new Phone;
+        SmartPhone.prototype.constructor = SmartPhone
+        SmartPhone.prototype.game = function(){
+            console.log('i can game...');
+        }
+
+        const chuizi = new SmartPhone('锤子',2499,'黑色','5.5')
+        console.log(chuizi);
+        /*
+            SmartPhone {brand: "锤子", price: 2499, color: "黑色", size: "5.5"}
+                brand: "锤子"
+                color: "黑色"
+                price: 2499
+                size: "5.5"
+                    __proto__: Phone
+                    brand: undefined
+                    constructor: ƒ SmartPhone(brand ,price,color,size)
+                    game: ƒ ()//独有的
+                    price: undefined
+                            __proto__:
+                            call: ƒ () //父亲的
+                            constructor: ƒ Phone(brand, price)
+                            __proto__: Object
+        */
+    </script>
+</body>
+</html>

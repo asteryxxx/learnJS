@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //0:Number.EPSILON表示js的最小精度，接近于2.22×10的-16次方
+        //假如有两个数比较谁大谁小，如果他们的差值小于上面这个Number.EPSILON
+        //就认为他们是相等的
+
+        console.log(0.1+0.2 === 0.3);//false
+        function equal(a,b){
+            //如果差值的绝对值小于这个误差，就认为是相等的
+            if(Math.abs(a-b)<Number.EPSILON){
+                return true
+            }else{
+                return false;
+            }
+        }
+         console.log(equal(0.1+0.2,0.3));//true
+
+         //1:二进制和八进制
+         let b =0b1010
+         let o = 0o777;
+         console.log(b);//10
+       console.log(o);//511
+
+ //2:检查一个数是否为有限数：可以写成分数的数.包括整数和循环小数.不包括无限不循环小数
+        console.log(Number.isFinite(100));//true
+        console.log(Number.isFinite(100/0));//false
+
+        //3:检查一个数值是否为NAN
+        console.log(Number.isNaN(123));//false
+
+        //4:字符串转整数,只会转有效的数字】
+        console.log(Number.parseInt('511225love'));//511225
+
+        //5:判断一个数是否为整数
+        console.log(Number.isInteger(2.5));//false
+
+        //6:将数字的小数部分抹掉
+        console.log(Math.trunc(3.55));//3
+
+        //7:判断一个数到底为正数 负数 还是零
+        console.log(Math.sign(100));//1
+        console.log(Math.sign(0));//0
+        console.log(Math.sign(-20));//-1
+    </script>
+</body>

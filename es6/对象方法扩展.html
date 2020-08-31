@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1:判断两个值是否完全相等
+        console.log(Object.is(100,100));//true
+        console.log(Object.is(NaN, NaN));//true
+        console.log(NaN === NaN);//false
+
+        //2:对象的合并,第二个参数会把第一个参数相同的属性给覆盖
+        const config1 = {
+            data:'用户数据',
+            host:"localhost",
+            port:3306,
+            name:'root'
+        }
+         const config2 = {
+                host: "http://4399.com",
+                port: 10010,
+                name: 'root',
+                password:'12345'
+            }
+        console.log(Object.assign(config1, config2)  );
+      /*   data: "用户数据"
+            host: "http://4399.com"
+            name: "root"
+            password: "12345"
+            port: 10010  */
+
+        //3:设置原型对象，不推荐使用
+        const school = {
+            name:'heima'
+        }
+        const cities = {
+            xiaoqu :['sz','sh']
+        }
+        Object.setPrototypeOf(school,cities);
+        console.log(school);
+        /*
+            {name: "heima"}
+            name: "heima"
+                __proto__:
+                xiaoqu: (2) ["sz", "sh"]
+                    __proto__:
+                    constructor: ƒ Object()  */
+
+        console.log(Object.getPrototypeOf(school));
+        //{xiaoqu: Array(2)}↑↑↑
+
+
+    </script>
+</body>
+</html>

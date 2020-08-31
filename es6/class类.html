@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //手机
+        // function Phone(brand,price){
+        //     this.brand = brand
+        //     this.price = price;
+        // }
+        // //添加方法
+        // Phone.prototype.call = function(){
+        //     console.log('我可以打电话');
+        // }
+        // let huawei = new Phone('互为',5999);
+        // huawei.call();
+        // console.log(huawei);
+        //以上是es5的做法
+
+        //es6的做法：
+        class Phone{//构造方法 ，当我们new的时候他就会执行这个方法
+            constructor(brand, price){
+                this.brand = brand
+                this.price = price;
+            }
+            call(){//必须是：方法名(){}  】 固定写法
+               console.log('我可以call');
+            }
+        }
+        let onePlus = new Phone('一加',999);
+        console.log(onePlus)
+
+        //--------静态成员---------
+        function shouji(){//他也是对象，所以可以添加属性
+
+        }
+        shouji.name ='手机'//他是属于函数对象的，不关实例对象的事，静态成员
+        shouji.change = function(){//换到java来说，他是属于类的
+            console.log('我可以改变手机');
+        }
+        let nokia = new shouji();
+        console.log(nokia.name);//undefined,实例对象没有构造函数的属性的
+        console.log(shouji.name);//手机
+
+         shouji.prototype.size ='5.5inch'
+        //实例对象的属性和构造函数的原型对象上是相同的
+         console.log(nokia.size);
+         console.log('---------------');
+         class Ershouji{
+             //静态属性，属于类的
+             static name = '二手手机';
+             static change(){
+                 console.log('我可以改变二手手机');
+             }
+         }
+         let shanzaishouji = new Ershouji();
+         console.log(shanzaishouji.name);//undefind
+         console.log(Ershouji.name);//二手手机
+
+    </script>
+</body>

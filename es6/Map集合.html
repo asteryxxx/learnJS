@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+       //类似于对象，也是键值对的集合，但是键的范围不限于字符串，各种类型的值都可以
+       //map也实现了iterator接口，可以使用拓展运算符和for..of遍历
+        let m =new Map();
+        m.set('name','zhh');
+        let key = {
+            school:'AAAAABBB'
+        };
+        m.set(key,['bj','sz'])
+        console.log('m'+m);
+
+        console.log(m.size);//长度
+        m.delete('name');//删除
+
+        console.log(m.get(key));// ["bj", "sz"]
+
+        //遍历
+        for (let v of m) {
+            console.log(v);
+        }
+
+    </script>
+</body>

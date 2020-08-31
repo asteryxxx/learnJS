@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //声明一个set
+        let s = new Set();
+        let s2 = new Set(['大事儿','小事','好事']);
+
+        //元素个数
+        console.log(s2.size);
+        //添加新的
+        s2.add('mei事儿')
+        s2.add('好事')//这个不会添加进去，因为去重
+        //删除
+        s2.delete('小事');
+        //检测
+        console.log(s2.has('好事'));
+        //清空全部 
+        //s2.clear()
+           console.log("===========");
+           //集合实现了iterator接口，所以可以for ..of遍历
+        for (let v of s2) {
+            console.log(v);
+        }
+
+            console.log("===========");
+        //实践1：数组去重
+        let arr = [1,2,3,4,4,2,3,6]
+        let result = [...new Set(arr)];
+        console.log(result);
+        //实践2：交集
+        let arr2 = [4,5,6,5,6]
+        // let rs2 = [...new Set(arr)].filter(item=>{
+        //     let tempset = new Set(arr2)
+        //     if(tempset.has(item)){
+        //         return true
+        //     }else{
+        //         return false;
+        //     }
+        // });
+   let rs2 = [...new Set(arr)].filter(item => new Set(arr2).has(item))      
+        console.log(rs2);//4,6 
+        //实践3:并集
+        let arr11 = [1,2,3,4]
+        let arr22 = [5,6,7]
+        let newArr11 = [...new Set([...arr11,...arr22])];
+        console.log(newArr11);
+    </script>
+</body>

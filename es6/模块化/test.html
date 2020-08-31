@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script src="aaa.js" type="module"></script>
+<!-- type="module"> 加了这个属性，aa.js和bb.js就不会有命名冲突的问题
+他们就是单独的模块，有单独的作用域，别的地方再去命名就不会冲突 -->
+<script src="bbb.js"></script>
+<script src="mmm.js"></script>
+<script>
+    /* es6的导出方式:
+    export let name = 'zhh' //导出变量写法
+    let name = 'lx';let age = 18;  
+        export {   //另一种写法
+            name,age
+        }
+        export function mul (){}//导出函数
+        export class Person {}//导出类
+    
+    导入方式：import {name,age} from "./aaa.js"
+
+    特殊的导出方式：某些情况下，一个模块中包含某个功能，并不希望给这个功能
+    命名，而让导入者自己来命名，这时候用export default。
+    导出：
+    const address = 'beijingshi'
+    export default address //只能有一个
+    export default function (argus){console.log(argus)}
+    //这里导出函数可以不用声明方法名
+    然后导入：
+    import addr from './aaa.js' //这里就可以自定义名字了，因为只导出了这个
+
+
+    统一全部导入：
+    import * as aaa from './aaa.js'
+    所有导出的东西都在aaa里面，通过aaa.属性/方法拿到
+        */
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //对象继承ES6方式
+        class Phone{
+           constructor (brand, price){
+              this.brand = brand
+              this.price = price
+          }
+            call = function(){
+                console.log('call...');
+          }
+        }
+
+        //智能手机
+        class SmartPhone extends Phone{
+            constructor(brand ,price,color,size){
+                super(brand,price)//这里的super就是父类的constructor的方法
+                this.color = color ;//子类独有的属性初始化
+                this.size = size;
+            }
+            game = function(){
+               console.log('i can game...');
+             }
+             call(){//重写父类，调用子类的
+               // super()//不能这样调用父类重名的方法的
+                 console.log('可以视频童虎');
+             }
+         }
+
+        const xiaomi = new SmartPhone('小米',2499,'黑色','5.5')
+        console.log(xiaomi);
+        xiaomi.call();xiaomi.game()
+        /*
+           SmartPhone {brand: "小米", price: 2499, color: "黑色", call: ƒ, game: ƒ, …}
+                brand: "小米"
+                call: ƒ ()
+                color: "黑色"
+                game: ƒ ()
+                price: 2499
+                size: "5.5"
+                __proto__: Phone
+        */
+
+         console.log('----set/get------------------');
+        class Person{
+            get height(){//只要读取他的height属性就会执行这个函数代码
+                console.log('身高被读取了');
+                
+                return "190cm"//返回值
+            }
+            set height(nweVal){
+                console.log('被修改了');
+            }
+        }
+        let zs = new Person();
+        console.log(zs.height);
+        zs.height = '155'
+    </script>
+</body>
+</html>

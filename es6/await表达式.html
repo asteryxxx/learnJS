@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const read =new Promise ((resolve,reject)=>{
+           // resolve('成功的值')
+           reject('shibaila')
+        })
+
+        //await要放在async函数中
+        //async函数的返回值是 Promise 对象
+        async function main(){
+            try{
+                 let res = await read;
+                 //await的返回结果是promise对象成功的结果   
+                  console.log(res);
+            }catch(e){
+                console.log(e);//shibaila
+            }//失败了由catch进行捕获
+       // 你运行上面的代码的时候你会发现如果Promise走了reject，代码会报错，
+  // 因为await只接收resolve的值不接收reject，可以把代码放进try...catch语句中
+        }
+
+        main()//成功的值
+       // async函数可以看作多个异步操作，包装成的一个 Promise 对象
+       // async函数的执行，与普通函数一模一样，只需要直接调用即可。
+        //await表示紧跟在后面的表达式需要等待结果。
+    </script>
+</body>
+</html>

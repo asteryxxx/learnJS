@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let res = 'zhh'
+        let res2 = 'lx'
+         console.log({ res, res2 })
+         //{ res: "zhh", res2: "lx" }
+
+        //生成器就是一个特殊的函数
+        function * gen(){
+           // console.log('hi h ');
+           console.log('111');
+           //调用iteartor.next()，执行代码块的第一段，打印111
+            yield '一只没有耳朵';
+            console.log('2222');
+            yield '一只没有屁股';
+            console.log('3333');
+            yield '真奇怪';
+            console.log('444');
+        //yield是函数代码的分隔符：就是gen(){ 到第一个yield是一段
+        //三个分隔符产生四块代码
+        }
+        let iteartor = gen();
+        console.log(iteartor);
+        //发现他是一个迭代器对象，并没有打印hi语句
+       // iteartor.next()//hi h ' ，如果想打印就next
+
+        console.log(iteartor.next());
+        console.log(iteartor.next());
+        console.log(iteartor.next());//{value: "真奇怪", done: false}
+        console.log(iteartor.next());//{value: undefined, done: true}
+         //【通过next方法控制向下遍历的。】
+
+         for (let ii of gen()) {
+             console.log(ii)
+         }//一只没有耳朵 一只没有屁股 真奇怪
+         //发现每次遍历的结果是yield后面的表达式！！！
+
+         console.log('-----------------------');
+         //--------生成器函数参数------
+          function * gen2(arg){
+            console.log(arg)//aaa
+            let one = yield '111';
+            console.log(''+one);//输出bbb
+           let two = yield '222';
+           console.log('two:'+two);//ccc
+            yield '333';
+          }
+          let it2=gen2('aaa')
+          console.log(it2.next());
+          //第二次调用next传入的实参作为第一个yield语句的返回结果
+           console.log(it2.next('bbb'));
+        console.log(it2.next('ccc'));
+        //第三次调用next传入的ccc作为第二个yield语句返回结果，所以49行打印ccc
+
+       //实例：异步编程 1s后控制台输出111，2s后输出222，3s后输出333
+          function one (){
+              setTimeout(()=>{
+                console.log('111');
+               it3.next(); //不然他不会继续往下执行
+              },1000)
+          }
+          function two (){
+              setTimeout(()=>{
+                console.log('222');
+                 it3.next(); //不然他不会继续往下执行
+              },1000)
+          }
+          function three (){
+              setTimeout(()=>{
+                console.log('333');
+              },1000)
+          }
+          function * gen3 (){
+              yield one();
+    //yield后面放异步任务。
+               yield two(); yield three();
+          }
+
+         let it3 = gen3();
+         it3.next(); 
+
+         //实例2：模拟获取 用户数据 订单数据 商品数据
+          function getUsers (){
+              setTimeout(()=>{
+                let data = '用户数据'
+               it4.next(data); //调用next方法，并且将数据传入
+    //第二次调用next才会进入getUsers方法，然后作为第一个yield的返回结果
+              },1000)
+          }
+          function getOrders(){
+              setTimeout(()=>{
+                let data = '订单数据'
+               it4.next(data);//第三次调用next
+        //这个data将作为第二个业务语句的返回结果
+              },1000)
+          }
+          function getGoods (){
+              setTimeout(()=>{
+                let data = '商品数据'
+               it4.next(); //不然他不会继续往下执行
+              },1000)
+          }
+        //必须要得到用户，才能得到订单，才能得到商品
+           function* gen4() {
+               let users = yield getUsers();
+               console.log('user:'+users);//'用户数据'
+                yield getOrders();
+                yield getGoods ();
+            }
+            let it4 = gen4()
+            it4.next('111');
+
+   /*     【总结一下：可以把generator理解成一个状态的机器，
+        他封装了多个内部状态，执行generator会返回一个遍历器的对象，
+        可以依次遍历函数内部的每一个状态。
+        yield表达式，定义不同的内部状态 
+        function* foo() {
+                yield 111
+                yield 222
+                return 333
+            }
+            var bar = foo()
+        你调用了foo后，函数不会执行，返回的也不是函数运行结果，而是一个
+        指向内部状态的指针对象。只有调用Next方法才可以使得指针往后移动，
+        直到遇见下一个yield表达式，或者return语句。所以他是分段执行的，
+        yield是暂停的标识，next是恢复执行的标志。
+
+   yield解释： 当函数运行到yield表达式的时候函数就会暂停，
+        并将表达式作为将来next返回值对象里的value值
+        】   */
+    </script>
+</body>

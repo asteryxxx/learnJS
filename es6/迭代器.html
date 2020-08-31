@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //声明一个数组
+        const xiyou = ['唐僧','孙悟空','猪八戒']
+        for(let v of xiyou){//for ...of保存的是键值
+            //打印的是:'唐僧','孙悟空','猪八戒'
+            console.log(v);
+        }
+         for(let v in xiyou){//for..in:保存的是键名
+             //打印的是:0 1 2
+            console.log(v);
+        }
+        console.log(xiyou);
+        //Symbol(Symbol.iterator): ƒ values() 
+//为什么数组能使用for...of遍历？因为数组有symbol.iterator属性
+
+        /* 工作原理：
+        1）创建一个指针对象，指向当前数据结构的起始位置
+        2）第一次调用对象的next方法，指针自动指向数据结构的第一个成员
+        3)接下来不断的调用next方法，指针一直向后移动，直到指向最后一个成员
+        4)每调用next方法返回一个包含value和done属性（是否完成的状态）的对象
+        注意：需要自定义遍历数据的时候，要想到迭代器
+        */
+        let iterator = xiyou[Symbol.iterator]();
+        console.log(iterator);
+       /* __proto__: Array Iterator
+            next: ƒ next()  发现有next的方法 */
+        console.log(iterator.next());
+        /*
+        {value: "唐僧", done: false}
+        */
+        console.log(iterator.next());
+        //{value: "孙悟空", done: false}
+        console.log(iterator.next());
+        //{value: "猪八戒", done: false}
+        console.log(iterator.next());
+        //{value: undefined, done: true} 说明到头了，为true表示完成了
+
+
+        //----自定义遍历数据----
+        const banji = {
+            name:'终极一班',
+            stus:[
+                'xiaosan','xiaosi','xiaowu'
+            ],
+            [Symbol.iterator](){
+        //the Symbol.iterator method is not an object
+                let index = 0
+                let _this = this
+                  return{
+                      next:function(){
+                    //对象中调用属性必须要this.
+                          if(index < _this.stus.length){
+                               const res = {value:_this.stus[index],done:false}
+                                index ++;//下标自增
+                                return res;
+                          }else{
+                              return {value:undefined,done:true}
+                      }
+                  }
+    //先有个指针对象，然后对象有个next方法，我们需要声明一下
+    //next方法返回的结果要是OBject类型
+            }
+        }
+        }
+        for (let v of banji) {
+            console.log(v);
+        }//Uncaught TypeError: banji is not iterable
+        //我们希望遍历返回的是：对象的属性的数组里面的成员
+
+    </script>
+</body>
