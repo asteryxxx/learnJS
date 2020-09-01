@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type='text' value='文本框1'>
+     <input type='text' value='文本框2'>
+    <input type='password' value='密码'>
+
+    <div id="foo">
+        <p class="warning">这是示例警告</p>
+        <p class="error">这是一个示例错误</p>
+        </div>
+    <div id='bar'>
+        <p> 哈哈哈哈哈 </p>
+    </div>
+    <ul class="nav">
+        <li><a href="#">首页</a></li>
+        <li data-active='1'><a>产品</a></li>
+        <li><a href="#">关于</a></li>
+    </ul>
+    <script>
+        var matches = document.querySelectorAll("input[type='text']");
+        //返回文档中属性名为"data-src"的iframe元素列表：
+         for(let i = 0;i<matches.length;i++){
+            console.log(matches[i].value)
+        }
+
+        var matches = document.querySelectorAll("li[data-active='1']>a");
+        console.log(matches[0].innerHTML)//产品
+
+        var alerts = document.querySelectorAll("p.warning, p.error");
+        //选择某个标签的类名，可以选择多个，返回多个↑↑↑↑
+
+        var x = document.querySelector("#foo,#bar")
+    // querySelector()接受一组选择器，返回与该组中的任何选择器匹配的【第一个元素】
+        console.log(x)// < div id = "foo"> 只返回第一个匹配的
+       //查找第一个匹配 class属性的html元素
+       var el = document.querySelector(".myclass");
+
+        //选择所有li元素，然后循环遍历
+        let lis = document.querySelectorAll(".nav>li")
+        for(let i = 0;i<lis.length;i++){
+            console.log(lis[i])
+        }
+
+        
+    </script>
+</body>
+</html>

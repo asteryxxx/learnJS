@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .right{
+            color:green
+        }
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 用户名验证 -->
+    <input type='text' class='uname'><span>请输入用户名</span>
+</body>
+<script>
+    var rg13 = /^[a-zA-Z0-9_]{4,10}$/
+    var uname = document.querySelector('.uname');
+    var span = document.querySelector('span')
+    uname.onblur = function (){
+        if(rg13.test(this.value)){
+            console.log('对的');
+            span.className = 'right'
+            span.innerHTML = '格式是对的'
+
+        }else{
+            console.log('error');
+             span.className = 'error'
+            span.innerHTML = '格式是错的'
+        }
+    }
+</script>
+</html>

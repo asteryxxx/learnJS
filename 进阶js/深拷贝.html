@@ -19,12 +19,34 @@
     }
     var o ={};
     function deepcopy(newObj,oldObj){
-        for(var k in oldobj){
+        for(var k in oldObj){
             //判断我们的属性属于哪种数据类型
             //1、获取属性值 oldobj[k]
             var item = oldObj[k];
             //判断值是否是数组
+            if(item instanceof Array){
+    //Array也是OBject所以先判断Array比较好
+    //如果把Object放上面就不会判断下面的Array，他会把数组当对象来解析了
+                newObj[k] = []
+                //等价于o.color = []
+                deepcopy(newObj[k],item)
+            }else if(item instanceof Object){
+                newObj[k] = {};  //判断这个值是否是对象
+                deepcopy(newObj[k],item)
+            }else{
+                newObj[k] = item
+            //那就是属于简单数据类型
+            }
         }
     }
+    deepcopy(o,obj);
+    console.log(o)
+
+    var arr = []
+    console.log(arr instanceof Object);//true
+
+    o.msg.age = 20
+    console.log(obj);//999 并没有影响到
+    //把内存空间的数据重新复制了一份，所以不会影响到原来的
     </script>
 </html>

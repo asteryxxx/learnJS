@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //通过调用regexp对象的构造函数创建
+        var regexp = new RegExp(/123/);
+        console.log('regexp：'+regexp);
+        //利用字面量创建正则表达式
+        var rg= /123/ ;
+        console.log(rg.test(44444));//false
+        //test（）用于检测字符串是否符合该规则，返回true就符合
+
+        var rg1 = /abc/;//只要含有abc就是true
+         console.log(rg1.test('abcd'));//true
+          console.log(rg1.test('aabcd'));//true
+           var rg2 = /^abc/;//必须以abc开头的
+        //正则表达式的特殊字符
+        /*   1:边界符号
+            ^ :表示匹配行首的文本，以谁开始
+            $ :表示匹配行尾的文本，以谁结束
+        */
+          var rg3 = /^abc$/;//必须以abc开头的,abc结尾的
+          console.log(rg3.test('abcabc'));//false
+           /*   2:字符类
+            []:有一系列的字符可以供我们选择，只要匹配其中一个就好了
+        */
+        var rg4 = /[abc]/ ;//只要包含有a /只要包含有b /只要包含有c
+        console.log(rg4.test('andy'));//true
+         console.log(rg4.test('bbb'));//true
+         console.log(rg4.test('ccc'));//true
+        var rg5 = /^[abc]$/ ;//三选一：只有是a /只有是b /只有是c
+        console.log(rg5.test('a'));//true
+         console.log(rg5.test('b'));//true
+         console.log(rg5.test('c'));//true    
+         console.log(rg5.test('abc'));//false  
+
+         var rg6 = /^[a-z]$/ //26个小写英文字母返回任何一个即可
+         console.log(rg6.test('a'));//true
+        //字符组合
+        var rg7 = /^[a-zA-Z0-9_]$/ //26个英文字母返回任何一个即可,大小写即可
+        console.log(rg7.test('_'));//true
+        console.log(rg7.test('8'));//true
+        console.log(rg7.test('B'));//true
+
+        var rg8 = /^[^a-zA-Z0-9_]$/ //第二个^写在[]里表示取反，不能包含▲注意
+        //第一个^表示边界符号
+         console.log(rg8.test('_'));//false
+        console.log(rg8.test('8'));//false
+        console.log(rg8.test('B'));//false
+
+        //量词符号： * 重复0/更多次 
+        //  + 重复1/更多次   ? 重复0/1次  {n} 重复n次  {n,} 重复n/更多
+        var rg11 = /^a*$/  //>=0 可以出现0/很多次
+        var rg12 = /^a{3}$/  //只能出现3次
+
+        //量词是设定某个模式出现的次数
+        var rg13 = /^[a-zA-Z0-9_]{6,10}$/
+        console.log(rg13.test('B123345'));//true
+
+
+        /* 括号总结
+        1：中括号 表示匹配方括号中的任意字符
+        2：大括号 表示重复次数
+        var reg = /^abc{3}$/ 这个是c重复3次，而不是abc重复三次
+         
+        3：小括号：表示优先级
+        var reg = /^(abc){3}$/ 让abc重复三次
+        */
+
+    </script>
+</body>
+</html>
