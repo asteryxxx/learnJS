@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //宏队列：dom事件回调，ajax回调，定时器回调
+        //微队列：promise回调，mutation回调
+        setTimeout(()=>{
+            console.log('timeout callback');//2
+              Promise.resolve(3).then((res)=>{
+                console.log('Promise...'+res);//3
+        })
+        },0)
+         setTimeout(() => {
+             Promise.resolve(3).then((res)=>{
+                console.log('Promise22...');//3
+        }) //4 
+           console.log('timeout callback2');
+            }, 0)
+
+        Promise.resolve(1).then((res)=>{
+            console.log('Promise...'+res);//1
+        })
+    //    Promise...1
+    //     timeout callback
+    //     Promise...3
+    //     timeout callback2
+    //     Promise22...
+     //同一种类型的有先后顺序，微队列的优先级高比宏队列高
+     //1、js引擎首先执行完所有的同步代码。
+     //2、每次准备取出第一个宏队列执行前，都要将所有的微任务一个个取出来执行】
+
+    </script>
+</body>
+</html>

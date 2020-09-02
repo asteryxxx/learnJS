@@ -9,16 +9,17 @@
 </head>
 
 <body>
+     <span>我是上一个兄弟span</span>
     <div>我是div</div>
     <span>我是span</span>
     <script>
         var div = document.querySelector('div');
         // 1.nextSibling 下一个兄弟节点 包含元素节点或者 文本节点等等
-        console.log(div.nextSibling);
-        console.log(div.previousSibling);
-        // 2. nextElementSibling 得到下一个兄弟元素节点
-        console.log(div.nextElementSibling);
-        console.log(div.previousElementSibling);
+        console.log(div.nextSibling);//#text
+        console.log(div.previousSibling);//#text
+        // 2. nextElementSibling 得到下一个兄弟元素节点 ie9以上
+        console.log(div.nextElementSibling);//<span>我是span</span>
+        console.log(div.previousElementSibling);//<span>我是上一个兄弟span</span>
     </script>
 </body>
 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+          5、  promise.then()返回的新Promise的结果状态由什么决定？
+            1）简单表达：由then()指定的回调函数执行的结果决定 】
+            2）详细表达：
+                2.1：如果抛出异常，新promise变为rejected，reason为抛出异常
+                2.2：如果返回的是非promise的任意值，新promise变成resolved，
+                    value 为返回的值
+                2.3：如果返回的是另一个新的promise ，promise的结果就会变成新的
+                   promise结果
+        */
+        new Promise((resolve, reject) => {
+                    resolve(1)
+            }).then(res => {
+               console.log('on1:'+res);
+               //return 2  //同步操作直接return 
+               return Promise.resolve(44)//on2:44
+            }).then(res => {//上面返回2，这里res就收到为2，不然就是undefined
+               console.log('on2:'+res); //如果return 2 就 on2:2
+            //因为这里的.then由上面的回调函数决定的，上面一开始resolve（1）
+            //传给第一个.then就会打印on1:1，但是他回调函数没有return任何东西，
+            //所以第二个.then就收到的是undefined
+
+            //.then指定的回调函数到底由谁执行，是由调用.then的Promise来决定。】
+            //而.then返回的promise由这个函数的执行结果来决定↓↓↓↓↓↓】
+            //res => {console.log('on1:'+res);return Promise.resolve(44) }
+            })
+   // on1: 1
+   // on2: undefined
+
+   //.then后面如果要同步操作直接return 2；】
+   //如果需要去执行异步任务，就用new Promise包起来、】
+
+    new Promise((resolve, reject) => {
+            reject(111)
+        }).then(res => {
+            console.log('on1:' + res);
+        },error=>{
+             console.log('on1error:' + error);
+             //我们这里没返回，所以是undefind
+            // throw 6
+        }).then(res => {
+            console.log('on2:' + res); 
+        },error=>{
+             console.log('on2error:' + error);
+        })
+        //on1error:111
+        //on2:undefined 因为他reject调用打印到error:111，但是他执行完没报错，
+        //所以跳到49行打印undefined.
+
+        //我们看在48行加上这一句： throw 6，就打印变了：on2error:6
+        //就是说前面的promise失败，不代表后面返回的promise也会失败！！！！
+
+
+        /* 6、promise异常传递？
+        1）当使用promise的then链式调用时，可以在最后指定失败的回调。
+        2)前面任何操作出现了异常，都会传到最后失败的回调中处理。
+        */
+        new Promise((resolve, reject) => {
+            reject(666)
+        }).then(res => {
+            console.log('on1:' + res);
+        }//,reason => {throw reason} 如果不写，这句是默认的，然后往下抛
+        //return Promise.reject(reason)//对错误处理进行了两次
+        ).then(res => {//如果上面处理了就不会传到后面去了
+            console.log('on2:' + res); 
+        }, error => {console.log('on2error:' + error); }
+        ) //on2error:666
+        .catch(reason=>{//因为上面on2error处理了，所以下面就不会进去
+            console.log('我是最后处理的：'+reason);
+        })
+       
+
+//7、中断的promise链。如果我们想在96行就中断他
+//不在调用后面的回调函数，解决方法：返回一个pending的promise
+        new Promise((resolve, reject) => {
+            reject(666)
+        }).then(res => {
+            console.log('on1:' + res);
+        }//,reason => {throw reason} 如果不写，这句是默认的，然后往下抛
+        //return Promise.reject(reason)//对错误处理进行了两次
+        ).then(res => {//如果上面处理了就不会传到后面去了
+            console.log('on2:' + res); 
+        } ) 
+        .catch(reason=>{
+            console.log('22我是最后处理的：'+reason);
+            // return Promise.reject(reason)
+           // throw reason
+           return new Promise(()=>{})//返回一个pending的promise就中断了
+        }).then(res=>{//因为catch是成功的没抛出异常，95行打印undefined
+              console.log('22我是catch后面是res的：'+res);
+        },error=>{
+            //如果我们想打印98行，而不是95行。
+            //做法1：throw reson 
+            //做法2：return Promise.reject(reason)
+            console.log('33我是catch后面是error的：'+error);
+            //33我是catch后面是error的：666
+        })
+        
+    </script>
+</body>
+</html>

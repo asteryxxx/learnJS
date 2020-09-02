@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 节点的优点 -->
+    <div>我是div</div>
+    <span>我是span</span>
+    <ul>
+        <li>我是li</li>
+        <li>我是li</li>
+        <li>我是li</li>
+        <li>我是li4</li>
+    </ul>
+    <ol>
+        <li>我是li1</li>
+        <li>我是li2</li>
+        <li>我是li3</li>
+        <li>我是li4</li>
+        <li>我是li5</li>
+    </ol>
+    <script>
+        var ul = document.querySelector('ul');
+        console.log(ul.childNodes);
+        for(var i = 0 ;i<ul.childNodes.length;i++){
+            if(ul.childNodes[i].nodeType == 1){//元素节点nodeType为1
+                console.log(ul.childNodes[i]);//属性节点nodeType为2
+            }//<li>我是li</li>打印四次
+        }
+        //换行文本节点：有五个[text]。换行和空格也算节点
+        //文本的nodeType为3【包括文字，空格换行等。
+            //  0: text
+            // 1: li
+            // 2: text
+            // 3: li
+            // 4: text
+            // 5: li
+            // 6: text
+            // 7: li
+            // 8: text
+        
+    // 2. children 获取所有的子【元素节点】，是只读属性，注意是元素节点，其他不返回
+            console.log(ul.children);
+           // HTMLCollection(4)[li, li, li, li]
+         console.log('------');
+         console.log(ul.children[ul.children.length - 1]);    
+         //动态返回最后一个li  
+
+           var ol = document.querySelector('ol');
+           //firstChild第一个子节点，不管是文本节点还是元素节点
+           console.log(ol.firstChild);//#text
+           console.log(ol.lastChild);//#text
+           //firstElementChild第一个子【元素节点】
+           console.log(ol.firstElementChild);//<li>我是li1</li>
+
+           //既没有兼容性问题，又可以返回第一个子元素【推荐】
+           console.log(ol.children[0]);
+    </script>
+</body>
+
+</html>

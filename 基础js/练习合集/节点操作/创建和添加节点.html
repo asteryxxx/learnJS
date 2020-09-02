@@ -15,13 +15,17 @@
     <script>
         // 1. 创建节点元素节点
         var li = document.createElement('li');
-        // 2. 添加节点 node.appendChild(child)  node 父级  child 是子级 后面追加元素  类似于数组中的push
+        li.innerHTML = '我是新插入到后面1内容'
+ // 2. 添加节点 node.appendChild(child)  父添子 【后面追加元素】
         var ul = document.querySelector('ul');
         ul.appendChild(li);
         // 3. 添加节点 node.insertBefore(child, 指定元素);
         var lili = document.createElement('li');
-        ul.insertBefore(lili, ul.children[0]);
-        // 4. 我们想要页面添加一个新的元素 ： 1. 创建元素 2. 添加元素
+         lili.innerHTML = '我是新插入到前面1内容'
+        ul.insertBefore(lili, ul.children[0]);//第一个子元素节点前面插入
+        // 我是新插入到前面1内容
+        // 123
+        // 我是新插入到后面1内容
     </script>
 </body>
 

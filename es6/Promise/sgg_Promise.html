@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //成功的回调
+        function successCall(res){
+            console.log('文件创建成功:'+res);
+        }
+        //失败的回调
+            function errorCall(error) {
+                console.log('文件创建失败:' + error);
+            }
+        //1：使用纯回调函数
+        createAudioFileAsync(audioSetting,successCall,errorCall)
+        //这是伪代码，要指定成功的回调和失败的，在你真正的去执行异步操作之前就要指定好
+        //先指定的回调，再执行异步任务。
+
+        //2:使用Promise，我们并没有执行回调函数
+        const promise = createAudioFileAsync(audioSetting)
+        //异步任务在24行就启动起来了。因为已经得到了promise对象
+        setTimeout(()=>{
+                promise.then(successCall,errorCall)
+            },3000)
+
+
+        const p = new Promise ((resolve,reject)=>{//执行器函数，同步回调
+            console.log('执行executor');
+            setTimeout(()=>{
+                resolve('我是异步操作任务');
+            },1000)
+        })
+        console.log('new Promise之后的');
+
+        setTimeout(()=>{//我们在有了结果之后才指定回调函数，能得到结果的，以前的不行
+            p.then(res=>{
+                console.log('成功的：'+res);
+            })//先有了结果，后面过来一段时间才执行的回调函数
+        },2000)
+            //   执行executor
+            //  new Promise之后的
+            // 过了2s后： 成功的：我是异步操作任务
+
+    // 原来是必须注册回调才能执行异步操作【必须在启动异步任务前指定好】
+    //现在promise先异步操作,最终结果已经确定了之后,无论你是否使用then都可以，数据不会丢
+    //使用promise优势：1、指定回调函数的方式更加灵活了。2、支持链式调用了
+
+        //回调地狱
+        doSomething(function(result){
+             doSomethingtwo(result,function(Newresult){
+                 doSomethingthreoo(Newresult,function(Finalresult){
+                    console.log('final res:'+ Finalresult)
+                  },errorCall)
+             },errorCall)
+        },errorCall)
+
+        //使用promise的链式调用解决回调地狱
+        // doSomething()返回的是promise
+        doSomething().then(function(result){
+            return doSomethingtwo(result)
+        })
+        .then(function(Newresult){
+            return doSomethingthreoo(Newresult)
+        }).then(function(Finalresult){
+            console.log('final res:'+ Finalresult)
+        }).catch(errorCall)//任何一个出了异常都会传到这里来
+        
+        //使用async / await 解决回调地狱最终的方案
+        async function request(){
+            try{//  第一个异步resolve之后第二个才会开始发送
+                const result = await doSomething();
+                const Newresult = await doSomethingtwo(result);
+                const Finalresult = await doSomethingthreoo(Newresult);
+                console.log('final res:'+ Finalresult)
+            }catch(error){
+                errorCall(error)
+            }
+        }
+
+
+        /* Promise构造函数：Promise( excutor){}
+          excutor函数：同步执行，：同步执行，(resolve,reject)=>{}
+          resolve函数：内部定义成功时我们调用的函数
+          reject函数：内部定义失败时我们调用的函数
+          说明:excutor会在Promise内部立即同步回调，异步操作在执行器中执行
+        */
+
+        /*
+          Promise.prototype.then方法：（onResolved,onRejected）=>{}
+          onResolved:成功的回调 
+          onRejected：失败的回调
+        */
+
+         /*
+             Promise.prototype.catch方法：（onRejected）=>{}
+             onRejected：失败的回调
+             说明：相当于then(undefined，onRejected)
+           */
+
+        /*
+          Promise.resolve方法：（res）=>{}
+         res:成功的数据或者Promise对象
+         说明：返回一个成功/失败的Promise对象
+        */
+
+        const p2 = Promise.resolve(2)
+         const p3 = Promise.reject(3)
+        //语法糖
+        p2.then(res=>{
+            console.log('res:'+res);
+        })
+         p2.catch(err => {
+                console.log('err:' + err);
+         })
+
+       const newPAll = Promise.all([p2,p3])
+         newPAll.then(res=>{
+             console.log('all onResolved()',res);
+         },error=>{
+             console.log('all onRejected()',error);
+         })//失败的结果就是：3 ，成功就是：2
+         //打印：all onRejected() 3
+
+          const RPAll = Promise.race([p2, p3])
+          //看谁先完成返回就用谁的，剩下的不要了。
+          //如果给p2延迟一下，先执行的就是p3，会输出失败 
+
+        
+        /* 如何改变promise的状态
+        1）resolve：会变成resolved 
+        2)reject:会变成rejected
+        3)抛出异常：会变成rejected
+        */
+        const pp = new Promise((resolve,reject)=>{
+            throw new Error('出错了')//会变成rejected
+        })
+        //如果一个Promise指定了多个成功的回到函数，都会调用吗？
+        //答：当promise改变为对应状态时都会被调用到！！！！！！
+
+        console.log('---------------------');
+        //常规：先指定回调函数，后改变的状态
+        new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve(1)//后改变状态（同时指定数据），异步执行回调
+            },1000)
+        }).then(res=>{
+            //先指定回调函数，保存当前指定的回调函数
+        })
+        //如何先改变状态，后指定回调函数
+         new Promise((resolve, reject) => {
+                    resolve(1)//先改变状态（同时指定数据）
+            }).then(res => {
+               // 后先指定回调函数，异步执行回调
+            })
+        /* 执行器（executor)【(resolve, reject) => {
+                    resolve(1)}】状态立即改变
+            和.then同步执行，回调函数异步执行  */
+        
+    </script>
+</body>
+</html>

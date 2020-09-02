@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .nr {
+            display: none;
+            background-color: red;
+        }
+    
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+    </style>
+    
+</head>
+<body>
+    
+    <div class="tab_con">
+        <div class="item" style="display: block;">
+            1介绍
+        </div>
+        <div class="item">
+            2介绍
+        </div>
+        <div class="item">
+            3介绍
+        </div>
+    
+        <div class="neirong1 nr" style="display: block;">
+            1内容
+        </div>
+        <div class="neirong2 nr">
+            2内容
+        </div>
+        <div class="neirong3 nr">
+            3内容
+        </div>
+    </div>
+    <script>
+        var list = document.getElementsByClassName("item")
+        var nrlist = document.getElementsByClassName("nr")
+        for (let i = 0; i < list.length; i++) {
+            list[i].onclick = function () {
+                console.log("我被点击了" + i + "介绍");
+                for (let i = 0; i < nrlist.length; i++) {
+                    nrlist[i].style.display = "none"
+                }
+                //nrlist[i]这个可以获取到同样类名的第几个元素  
+                nrlist[i].style.display = "block"
+            }
+        }
+</script>
+</body>
+</html>

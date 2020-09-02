@@ -91,24 +91,29 @@
             // 开始给5个小li 设置索引号 
             lis[i].setAttribute('index', i);
             lis[i].onclick = function() {
-                // 1. 上的模块选项卡，点击某一个，当前这一个底色会是红色，其余不变（排他思想） 修改类名的方式
-
+                // 1. 点击某一个，当前这一个底色会是红色，其余不变（排他思想） 修改类名的方式
                 // 干掉所有人 其余的li清除 class 这个类
-                for (var i = 0; i < lis.length; i++) {
-                    lis[i].className = '';
-                }
-                // 留下我自己 
+               setClassNone();
+                // 留下我自己 ，添加样式
                 this.className = 'current';
-                // 2. 下面的显示内容模块
+                // 2. 下面的显示内容模块，谁点击谁就是lis[i]所以用this最好
                 var index = this.getAttribute('index');
                 console.log(index);
                 // 干掉所有人 让其余的item 这些div 隐藏
-                for (var i = 0; i < items.length; i++) {
-                    items[i].style.display = 'none';
-                }
+                setItemstyle();
                 // 留下我自己 让对应的item 显示出来
                 items[index].style.display = 'block';
             }
+        }
+      function  setItemstyle() {
+            for (var i = 0; i < items.length; i++) {
+                    items[i].style.display = 'none';
+                }
+        }
+       function  setClassNone() {
+             for (var i = 0; i < lis.length; i++) {
+                    lis[i].className = '';
+                }
         }
     </script>
 </body>
